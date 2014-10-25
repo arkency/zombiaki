@@ -2,35 +2,6 @@ require 'test/unit'
 require './zombiaki'
 
 class ZombiakiTestCase < Test::Unit::TestCase
-  def test_zombie_dies_after_shot
-    zombie = Zombie.new
-    zombie.hit
-    assert zombie.dead?
-  end
-
-  def test_2_lives_zombie_survives_one_shot
-    zombie = Zombie.new(lives=2)
-    zombie.hit
-    assert ! zombie.dead?
-  end
-
-  def test_2_lives_zombie_dies_after_two_shots
-    zombie = Zombie.new(lives=2)
-    zombie.hit
-    zombie.hit
-    assert zombie.dead?
-  end
-
-  def test_shoot_targets_first_zombie_on_the_midle_street
-    street  = Street.new
-    wladek  = Zombie.new(lives=1, name="wladek")
-    griszka = Zombie.new(lives=1, name="griszka")
-    street.put_zombie(4, wladek)
-    street.put_zombie(3, griszka)
-    street.make_shoot
-    assert griszka.dead?
-    assert ! wladek.dead?
-  end
 
   def test_shoot_at_left_street_doesnt_kill_zombie_at_middle
     app = ZombieGameApp.new
@@ -55,7 +26,6 @@ class ZombiakiTestCase < Test::Unit::TestCase
     assert_equal(true, app.no_zombie_at_left_street?(4))
     assert_equal("griszka", app.zombie_name_at_left_street(5))
   end
-
 
   def test_shoot_at_middle_street_doesnt_kill_zombie_at_right
     app = ZombieGameApp.new
@@ -83,12 +53,39 @@ class ZombiakiTestCase < Test::Unit::TestCase
     Zombie.new(lives=2)
   end
 
-  def assert_0_zombies_left(app)
-    assert_equal(0, app.zombies_at_middle_street_count)
+end
+
+class StreetTestCase < Test::Unit::TestCase
+  def test_shoot_targets_first_zombie_on_the_midle_street
+    street  = Street.new
+    wladek  = Zombie.new(lives=1, name="wladek")
+    griszka = Zombie.new(lives=1, name="griszka")
+    street.put_zombie(4, wladek)
+    street.put_zombie(3, griszka)
+    street.make_shoot
+    assert griszka.dead?
+    assert ! wladek.dead?
+  end
+end
+
+class ZombieTestCase < Test::Unit::TestCase
+  def test_zombie_dies_after_shot
+    zombie = Zombie.new
+    zombie.hit
+    assert zombie.dead?
   end
 
-  def assert_1_zombie_at_middle_street(app)
-    assert_equal(1, app.zombies_at_middle_street_count)
+  def test_2_lives_zombie_survives_one_shot
+    zombie = Zombie.new(lives=2)
+    zombie.hit
+    assert ! zombie.dead?
+  end
+
+  def test_2_lives_zombie_dies_after_two_shots
+    zombie = Zombie.new(lives=2)
+    zombie.hit
+    zombie.hit
+    assert zombie.dead?
   end
 end
 
