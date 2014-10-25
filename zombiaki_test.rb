@@ -1,5 +1,5 @@
 require 'test/unit'
-require './main'
+require './zombiaki'
 
 class ZombiakiTestCase < Test::Unit::TestCase
   def test_zombie_dies_after_shot
