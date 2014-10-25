@@ -18,11 +18,11 @@ class Street
   end
 
   def move_zombies_forward
-    move_all_zombies unless car_blocking?
+    move_all_zombies
   end
 
   def move_all_zombies
-    zombies.each { |zombie| move_forward(zombie) }
+    zombies.each { |zombie| move_forward(zombie) unless car_blocking?(zombie)}
   end
 
   def move_forward(zombie)
@@ -32,7 +32,7 @@ class Street
   end
 
   def zombies
-    @slots.select{|slot| slot != nil}
+    @slots.select{|slot| slot != nil && slot.class == Zombie}
   end
 
   def zombies_count
@@ -73,7 +73,7 @@ class Street
     @slots.index(zombie)
   end
 
-  def car_blocking?
-    @slots.detect{|slot| slot.class == Car}
+  def car_blocking?(zombie)
+    @slots.detect{|slot| slot.class == Car && (@slots.index(slot) < current_block(zombie))}
   end
 end
