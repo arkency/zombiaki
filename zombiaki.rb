@@ -1,12 +1,34 @@
 require './zombie'
 
+class Street
+  def initialize
+    @slots = Array.new(5)
+  end
+
+  def put_zombie(block, zombie)
+    @slots[block] = zombie
+  end
+
+  def zombies
+    @slots.select{|slot| slot != nil}
+  end
+
+  def clear_first_zombie
+    @slots[@slots.index(zombies.first)] = nil
+  end
+
+  def at(block)
+    @slots[block]
+  end
+end
+
 class ZombieGameApp
   def initialize
-    @zombies_at_middle_street = Array.new(5)
+    @middle_street = Street.new
   end
 
   def put_zombie_at_middle_street(zombie, block=5)
-    @zombies_at_middle_street[block-1] = zombie
+    @middle_street.put_zombie(block-1, zombie)
   end
 
   def make_shoot_at_middle_street
@@ -33,12 +55,11 @@ class ZombieGameApp
   private
 
   def kill_first_zombie
-    @zombies_at_middle_street[@zombies_at_middle_street.index(first_zombie_at_middle_street)] = nil
+    @middle_street.clear_first_zombie
   end
 
-
   def zombie_at_middle_street(block)
-    @zombies_at_middle_street[block-1]
+    @middle_street.at(block-1)
   end
 
   def no_zombies_at_middle_street?
@@ -50,7 +71,7 @@ class ZombieGameApp
   end
 
   def zombies_at_middle_street
-    @zombies_at_middle_street.select { |slot| slot != nil }
+    @middle_street.zombies
   end
 
 end
