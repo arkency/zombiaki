@@ -80,6 +80,10 @@ class ZombieGameApp
   def zombie_at_right_street(block)
     @right_street.at(block-1)
   end
+end
 
-
+class Car
+  def initialize(name)
+    @name = name
+  end
 end

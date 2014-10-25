@@ -3,7 +3,7 @@ require './zombiaki'
 
 
 class ZombiesMoveForwardTestCase < Test::Unit::TestCase
-  def test_zombies_turn
+  def test_zombies_turn_all_zombies_go
     app = ZombieGameApp.new
     app.put_zombie_at_left_street(Zombie.new(1, "griszka"), block=5)
     app.put_zombie_at_middle_street(Zombie.new(1, "wladek"), block=5)
@@ -17,6 +17,19 @@ class ZombiesMoveForwardTestCase < Test::Unit::TestCase
     assert_equal(true, app.no_zombie_at_left_street?(5))
     assert_equal(true, app.no_zombie_at_middle_street?(5))
     assert_equal(true, app.no_zombie_at_right_street?(5))
+  end
+
+  def test_zombies_dont_go_if_cars_are_blocking
+    street = Street.new
+    wladek = Zombie.new(lives=1, name="wladek")
+    trabant = Car.new("trabant")
+    street.put_zombie(5, wladek)
+    street.put_car(1, trabant)
+
+    street.move_zombies_forward
+
+    assert_equal(wladek, street.at(5))
+    assert_equal(nil, street.at(4))
   end
 end
 

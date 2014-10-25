@@ -7,6 +7,10 @@ class Street
     @slots[block] = zombie
   end
 
+  def put_car(block, car)
+    @slots[block] = car
+  end
+
   def make_shoot
     return if no_zombies?
     first_zombie.hit
@@ -14,7 +18,11 @@ class Street
   end
 
   def move_zombies_forward
-    zombies.each {|zombie| move_forward(zombie)}
+    move_all_zombies unless car_blocking?
+  end
+
+  def move_all_zombies
+    zombies.each { |zombie| move_forward(zombie) }
   end
 
   def move_forward(zombie)
@@ -63,5 +71,9 @@ class Street
 
   def current_block(zombie)
     @slots.index(zombie)
+  end
+
+  def car_blocking?
+    @slots.detect{|slot| slot.class == Car}
   end
 end
