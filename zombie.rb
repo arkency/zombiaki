@@ -21,7 +21,7 @@ class Zombie
     @lives == 0
   end
 
-  def moves_back_after_shoot?
-    @moves_back_after_shoot
+  def can_move_back?
+    not dead? and @moves_back_after_shoot
   end
 end
