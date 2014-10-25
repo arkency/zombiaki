@@ -12,7 +12,11 @@ class Zombie
     @lives == 1
   end
 
-  def add_injury
+  def hit
     @lives -= 1
+  end
+
+  def dead?
+    @lives == 0
   end
 end

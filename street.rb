@@ -9,11 +9,8 @@ class Street
 
   def make_shoot
     return if no_zombies?
-    if first_zombie.one_life_left?
-      clear_first_zombie
-    else
-      injury_first_zombie
-    end
+    first_zombie.hit
+    clear_first_zombie if first_zombie.dead?
   end
 
   def zombies
