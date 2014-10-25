@@ -32,15 +32,15 @@ class ZombieGameApp
   end
 
   def zombies_at_middle_street_count
-    zombies_at_middle_street.count
+    @middle_street.zombies_count
   end
 
   def no_zombie_at_middle_street?(block)
-    zombie_at_middle_street(block) == nil
+    @middle_street.no_zombie_at?(block-1)
   end
 
   def no_zombie_at_left_street?(block)
-    true
+    @left_street.no_zombie_at?(block-1)
   end
 
   private
@@ -53,28 +53,5 @@ class ZombieGameApp
     @middle_street.at(block-1)
   end
 
-  def no_zombies_at_middle_street?
-    first_zombie_at_middle_street == nil
-  end
-
-  def no_zombies_at_left_street?
-    first_zombie_at_left_street == nil
-  end
-
-  def first_zombie_at_middle_street
-    zombies_at_middle_street.first
-  end
-
-  def first_zombie_at_left_street
-    zombies_at_left_street.first
-  end
-
-  def zombies_at_left_street
-    @left_street.zombies
-  end
-
-  def zombies_at_middle_street
-    @middle_street.zombies
-  end
 
 end

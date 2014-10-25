@@ -20,6 +20,10 @@ class Street
     @slots.select{|slot| slot != nil}
   end
 
+  def zombies_count
+    zombies.count
+  end
+
   def no_zombies?
     zombies == []
   end
@@ -38,5 +42,9 @@ class Street
 
   def at(block)
     @slots[block]
+  end
+
+  def no_zombie_at?(block)
+    at(block) == nil
   end
 end
