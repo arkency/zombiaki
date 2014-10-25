@@ -22,24 +22,38 @@ class Street
     move_all_zombies
   end
 
+  def move_humans_forward
+    cars.each {|car| move_car_forward(car)}
+  end
+
   def move_all_zombies
     zombies.each { |zombie| move_forward(zombie) unless car_blocking?(zombie)}
   end
 
   def move_forward(zombie)
     current_block = current_block(zombie)
-    clear_zombie_slot(zombie)
+    clear_slot(zombie)
     put_zombie(current_block-1, zombie)
+  end
+
+  def move_car_forward(car)
+    current_block = current_block(car)
+    clear_slot(car)
+    put_car(current_block+1, car)
   end
 
   def move_zombie_back(zombie)
     current_block = current_block(zombie)
-    clear_zombie_slot(zombie)
+    clear_slot(zombie)
     put_zombie(current_block+1, zombie)
   end
 
   def zombies
     @slots.select{|slot| slot != nil && slot.class == Zombie}
+  end
+
+  def cars
+    @slots.select{|slot| slot != nil && slot.class == Car}
   end
 
   def zombies_count
@@ -55,7 +69,7 @@ class Street
   end
 
   def clear_first_zombie
-    clear_zombie_slot(first_zombie)
+    clear_slot(first_zombie)
   end
 
   def injury_first_zombie
@@ -72,8 +86,8 @@ class Street
 
   private
 
-  def clear_zombie_slot(zombie)
-    @slots[current_block(zombie)] = nil
+  def clear_slot(slot)
+    @slots[current_block(slot)] = nil
   end
 
   def current_block(zombie)
