@@ -121,6 +121,16 @@ class StreetTestCase < Test::Unit::TestCase
     assert_equal(nil,    street.at(4))
     assert_equal(wladek, street.at(5))
   end
+
+  def test_shoot_doesnt_move_back_if_borys
+    street  = Street.new
+    borys  = Zombie.new(lives=2, name="borys", moves_back_after_shoot=false)
+    street.put_zombie(4, borys)
+    street.make_shoot
+
+    assert_equal(borys, street.at(4))
+    assert_equal(nil,   street.at(5))
+  end
 end
 
 class ZombieTestCase < Test::Unit::TestCase

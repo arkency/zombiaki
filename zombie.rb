@@ -1,7 +1,8 @@
 class Zombie
-  def initialize(lives=1, name="zombie")
+  def initialize(lives=1, name="zombie", moves_back_after_shoot=true)
     @lives = lives
     @name  = name
+    @moves_back_after_shoot = moves_back_after_shoot
   end
 
   def name
@@ -18,5 +19,9 @@ class Zombie
 
   def dead?
     @lives == 0
+  end
+
+  def moves_back_after_shoot?
+    @moves_back_after_shoot
   end
 end

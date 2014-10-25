@@ -14,7 +14,7 @@ class Street
   def make_shoot
     return if no_zombies?
     first_zombie.hit
-    move_zombie_back(first_zombie) if not first_zombie.dead?
+    move_zombie_back(first_zombie) if not first_zombie.dead? and first_zombie.moves_back_after_shoot?
     clear_first_zombie             if first_zombie.dead?
   end
 
