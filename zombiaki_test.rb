@@ -34,6 +34,13 @@ class ZombiakiTestCase < Test::Unit::TestCase
     assert_equal("wladek", app.zombie_name_at_middle_street(5))
   end
 
+  def test_shoot_at_left_street_doesnt_kill_zombie_at_middle
+    app = ZombieGameApp.new
+    app.put_zombie_at_middle_street(one_life_zombie("wladek"), block=5)
+    app.make_shoot_at_left_street
+    assert_equal("wladek", app.zombie_name_at_middle_street(5))
+  end
+
   private
 
   def one_life_zombie(name="zombie")

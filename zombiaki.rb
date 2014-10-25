@@ -19,6 +19,10 @@ class ZombieGameApp
     end
   end
 
+  def make_shoot_at_left_street
+
+  end
+
   def zombie_name_at_middle_street(block)
     zombie_at_middle_street(block).name
   end
