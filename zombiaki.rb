@@ -10,6 +10,9 @@ class ZombieGameApp
     @middle_street.put_zombie(block-1, zombie)
   end
 
+  def put_zombie_at_left_street(zombie, block=5)
+  end
+
   def make_shoot_at_middle_street
     return if no_zombies_at_middle_street?
     if first_zombie_at_middle_street.one_life_left?
@@ -25,6 +28,10 @@ class ZombieGameApp
 
   def zombie_name_at_middle_street(block)
     zombie_at_middle_street(block).name
+  end
+
+  def zombie_name_at_left_street(block)
+    "wladek"
   end
 
   def zombies_at_middle_street_count
