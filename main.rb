@@ -29,7 +29,7 @@ class ZombiakiTestCase < Test::Unit::TestCase
     app.put_zombie_at_middle_street(one_life_zombie("wladek"), block=5)
     app.put_zombie_at_middle_street(one_life_zombie, block=4)
     app.make_shoot_at_middle_street
-    assert_equal(nil, app.zombie_at_middle_street(4))
+    assert_equal(true, app.no_zombie_at_middle_street?(4))
     assert_equal("wladek", app.zombie_name_at_middle_street(5))
   end
 
@@ -90,6 +90,25 @@ class ZombieGameApp
     end
   end
 
+  def zombie_name_at_middle_street(block)
+    zombie_at_middle_street(block).name
+  end
+
+  def zombies_at_middle_street_count
+    zombies_at_middle_street.count
+  end
+
+  def no_zombie_at_middle_street?(block)
+    zombie_at_middle_street(block) == nil
+  end
+
+  private
+
+
+  def zombie_at_middle_street(block)
+    @zombies_at_middle_street[block-1]
+  end
+
   def no_zombies_at_middle_street?
     first_zombie_at_middle_street == nil
   end
@@ -98,19 +117,8 @@ class ZombieGameApp
     zombies_at_middle_street.first
   end
 
-  def zombies_at_middle_street_count
-    zombies_at_middle_street.count
-  end
-
   def zombies_at_middle_street
     @zombies_at_middle_street.select { |slot| slot != nil }
   end
 
-  def zombie_name_at_middle_street(block)
-    zombie_at_middle_street(block).name
-  end
-
-  def zombie_at_middle_street(block)
-    @zombies_at_middle_street[block-1]
-  end
 end
