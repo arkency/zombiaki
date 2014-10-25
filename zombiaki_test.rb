@@ -1,7 +1,26 @@
 require 'test/unit'
 require './zombiaki'
 
-class ZombiakiTestCase < Test::Unit::TestCase
+
+class ZombiesMoveForwardTestCase < Test::Unit::TestCase
+  def test_zombies_turn
+    app = ZombieGameApp.new
+    app.put_zombie_at_left_street(Zombie.new(1, "griszka"), block=5)
+    app.put_zombie_at_middle_street(Zombie.new(1, "wladek"), block=5)
+    app.put_zombie_at_right_street(Zombie.new(1, "misza" ),  block=5)
+
+    app.play_zombies_turn
+
+    assert_equal("griszka", app.zombie_name_at_left_street(4))
+    assert_equal("wladek", app.zombie_name_at_middle_street(4))
+    assert_equal("misza", app.zombie_name_at_right_street(4))
+    assert_equal(true, app.no_zombie_at_left_street?(5))
+    assert_equal(true, app.no_zombie_at_middle_street?(5))
+    assert_equal(true, app.no_zombie_at_right_street?(5))
+  end
+end
+
+class ShootingAtStreetsTestCase < Test::Unit::TestCase
 
   def test_shoot_at_left_street_doesnt_kill_zombie_at_middle
     app = ZombieGameApp.new

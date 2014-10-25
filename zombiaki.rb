@@ -6,6 +6,11 @@ class ZombieGameApp
     @left_street   = Street.new
     @middle_street = Street.new
     @right_street = Street.new
+    @streets = [@left_street, @middle_street, @right_street]
+  end
+
+  def play_zombies_turn
+    @streets.each{|street| street.move_zombies_forward}
   end
 
   def put_zombie_at_middle_street(zombie, block=5)

@@ -13,6 +13,16 @@ class Street
     clear_first_zombie if first_zombie.dead?
   end
 
+  def move_zombies_forward
+    zombies.each {|zombie| move_forward(zombie)}
+  end
+
+  def move_forward(zombie)
+    current_block = current_block(zombie)
+    clear_zombie_slot(zombie)
+    put_zombie(current_block-1, zombie)
+  end
+
   def zombies
     @slots.select{|slot| slot != nil}
   end
@@ -30,7 +40,7 @@ class Street
   end
 
   def clear_first_zombie
-    @slots[@slots.index(zombies.first)] = nil
+    clear_zombie_slot(first_zombie)
   end
 
   def injury_first_zombie
@@ -43,5 +53,15 @@ class Street
 
   def no_zombie_at?(block)
     at(block) == nil
+  end
+
+  private
+
+  def clear_zombie_slot(zombie)
+    @slots[current_block(zombie)] = nil
+  end
+
+  def current_block(zombie)
+    @slots.index(zombie)
   end
 end
