@@ -29,7 +29,7 @@ class ZombieGameApp
   def make_shoot_at_middle_street
     return if no_zombies_at_middle_street?
     if first_zombie_at_middle_street.one_life_left?
-      @zombies_at_middle_street[@zombies_at_middle_street.index(first_zombie_at_middle_street)] = nil
+      kill_first_zombie
     else
       first_zombie_at_middle_street.add_injury
     end
@@ -48,6 +48,10 @@ class ZombieGameApp
   end
 
   private
+
+  def kill_first_zombie
+    @zombies_at_middle_street[@zombies_at_middle_street.index(first_zombie_at_middle_street)] = nil
+  end
 
 
   def zombie_at_middle_street(block)
