@@ -111,6 +111,16 @@ class StreetTestCase < Test::Unit::TestCase
     assert griszka.dead?
     assert ! wladek.dead?
   end
+
+  def test_shoot_moves_back_if_alive
+    street  = Street.new
+    wladek  = Zombie.new(lives=2, name="wladek")
+    street.put_zombie(4, wladek)
+    street.make_shoot
+
+    assert_equal(nil,    street.at(4))
+    assert_equal(wladek, street.at(5))
+  end
 end
 
 class ZombieTestCase < Test::Unit::TestCase

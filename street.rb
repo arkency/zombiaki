@@ -14,7 +14,8 @@ class Street
   def make_shoot
     return if no_zombies?
     first_zombie.hit
-    clear_first_zombie if first_zombie.dead?
+    move_zombie_back(first_zombie) if not first_zombie.dead?
+    clear_first_zombie             if first_zombie.dead?
   end
 
   def move_zombies_forward
@@ -29,6 +30,12 @@ class Street
     current_block = current_block(zombie)
     clear_zombie_slot(zombie)
     put_zombie(current_block-1, zombie)
+  end
+
+  def move_zombie_back(zombie)
+    current_block = current_block(zombie)
+    clear_zombie_slot(zombie)
+    put_zombie(current_block+1, zombie)
   end
 
   def zombies
