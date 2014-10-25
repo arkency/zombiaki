@@ -16,21 +16,11 @@ class ZombieGameApp
   end
 
   def make_shoot_at_middle_street
-    return if no_zombies_at_middle_street?
-    if first_zombie_at_middle_street.one_life_left?
-      kill_first_zombie_at_middle_street
-    else
-      first_zombie_at_middle_street.add_injury
-    end
+    make_shoot(@middle_street)
   end
 
   def make_shoot_at_left_street
-    return if no_zombies_at_left_street?
-    if first_zombie_at_left_street.one_life_left?
-      kill_first_zombie_at_left_street
-    else
-      first_zombie_at_left_street.add_injury
-    end
+    make_shoot(@left_street)
   end
 
   def zombie_name_at_middle_street(block)
@@ -55,12 +45,14 @@ class ZombieGameApp
 
   private
 
-  def kill_first_zombie_at_left_street
-    @left_street.clear_first_zombie
-  end
 
-  def kill_first_zombie_at_middle_street
-    @middle_street.clear_first_zombie
+  def make_shoot(street)
+    return if street.no_zombies?
+    if street.first_zombie.one_life_left?
+      street.clear_first_zombie
+    else
+      street.injury_first_zombie
+    end
   end
 
   def zombie_at_left_street(block)
