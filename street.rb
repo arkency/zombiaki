@@ -7,6 +7,15 @@ class Street
     @slots[block] = zombie
   end
 
+  def make_shoot
+    return if no_zombies?
+    if first_zombie.one_life_left?
+      clear_first_zombie
+    else
+      injury_first_zombie
+    end
+  end
+
   def zombies
     @slots.select{|slot| slot != nil}
   end
