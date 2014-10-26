@@ -37,14 +37,6 @@ class ZombieGameApp
     street_for_index(street_index).make_shoot
   end
 
-  def zombie_name(street_index, block)
-    street_for_index(street_index).at(block).name
-  end
-
-  def no_zombie_at?(street_index, block)
-    street_for_index(street_index).no_zombie_at?(block)
-  end
-
   def apply_effect_on_zombie(effect, zombie)
     effect.apply(zombie)
   end

@@ -11,12 +11,12 @@ class ZombiesMoveForwardTestCase < Test::Unit::TestCase
 
     app.play_zombies_turn
 
-    assert_equal("griszka", app.zombie_name(0, 3))
-    assert_equal("wladek", app.zombie_name(1, 3))
-    assert_equal("misza", app.zombie_name(2, 3))
-    assert_equal(true, app.no_zombie_at?(0, 4))
-    assert_equal(true, app.no_zombie_at?(1, 4))
-    assert_equal(true, app.no_zombie_at?(2, 4))
+    assert_equal("griszka", app.place(0, 3).name)
+    assert_equal("wladek", app.place(1, 3).name)
+    assert_equal("misza", app.place(2, 3).name)
+    assert_equal(true, app.place(0, 4).empty?)
+    assert_equal(true, app.place(1, 4).empty?)
+    assert_equal(true, app.place(2, 4).empty?)
   end
 
   def test_zombies_dont_go_if_cars_are_blocking
@@ -99,14 +99,14 @@ class ShootingAtStreetsTestCase < Test::Unit::TestCase
     app = ZombieGameApp.new
     app.put(one_life_zombie("wladek"), 1, block=4)
     app.make_shoot(0)
-    assert_equal("wladek", app.zombie_name(1, 4))
+    assert_equal("wladek", app.place(1, 4).name)
   end
 
   def test_shoot_at_middle_street_doesnt_kill_zombie_at_left
     app = ZombieGameApp.new
     app.put(one_life_zombie("wladek"), 0, block=4)
     app.make_shoot(1)
-    assert_equal("wladek", app.zombie_name(0, 4))
+    assert_equal("wladek", app.place(0, 4).name)
   end
 
 
@@ -115,15 +115,15 @@ class ShootingAtStreetsTestCase < Test::Unit::TestCase
     app.put(one_life_zombie("griszka"), 0, block=4)
     app.put(one_life_zombie, 0, block=3)
     app.make_shoot(0)
-    assert_equal(true, app.no_zombie_at?(0, 3))
-    assert_equal("griszka", app.zombie_name(0, 4))
+    assert_equal(true, app.place(0, 3).empty?)
+    assert_equal("griszka", app.place(0, 4).name)
   end
 
   def test_shoot_at_middle_street_doesnt_kill_zombie_at_right
     app = ZombieGameApp.new
     app.put(one_life_zombie("wladek"), 2, block=4)
     app.make_shoot(1)
-    assert_equal("wladek", app.zombie_name(2, 4))
+    assert_equal("wladek", app.place(2, 4).name)
   end
 
   def test_shoot_targets_first_zombie_on_the_right_street
@@ -131,8 +131,8 @@ class ShootingAtStreetsTestCase < Test::Unit::TestCase
     app.put(one_life_zombie("griszka"), 2, block=4)
     app.put(one_life_zombie, 2, block=3)
     app.make_shoot(2)
-    assert_equal(true, app.no_zombie_at?(2, 3))
-    assert_equal("griszka", app.zombie_name(2, 4))
+    assert_equal(true, app.place(2, 3).empty?)
+    assert_equal("griszka", app.place(2, 4).name)
   end
 
   private
