@@ -77,6 +77,20 @@ class ReflectorTestCase < Test::Unit::TestCase
 
     assert_equal(street.at(5), wladek)
   end
+
+  def test_zombie_cant_move_into_another_zombie_place
+    street = Street.new
+    wladek = Zombie.new
+    griszka = Zombie.new
+
+    street.put_zombie(5, wladek)
+    street.put_zombie(4, griszka)
+
+    street.use_reflector
+
+    assert_equal(street.at(5), wladek)
+    assert_equal(street.at(4), griszka)
+  end
 end
 
 class ShootingAtStreetsTestCase < Test::Unit::TestCase

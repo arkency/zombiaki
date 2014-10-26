@@ -19,7 +19,7 @@ class Street
   end
 
   def use_reflector
-    zombies.each {|zombie| move_zombie_back(zombie)}
+    zombies.reverse.each {|zombie| move_zombie_back(zombie)}
   end
 
   def move_zombies_forward
@@ -48,7 +48,7 @@ class Street
 
   def move_zombie_back(zombie)
     current_block = current_block(zombie)
-    return if current_block == 5
+    return if current_block == 5 or zombie_at?(current_block+1)
     clear_slot(zombie)
     put_zombie(current_block+1, zombie)
   end
@@ -83,6 +83,10 @@ class Street
 
   def at(block)
     @slots[block]
+  end
+
+  def zombie_at?(block)
+    at(block).class == Zombie
   end
 
   def no_zombie_at?(block)
