@@ -29,7 +29,7 @@ class ZombiesMoveForwardTestCase < Test::Unit::TestCase
     street.move_zombies_forward
 
     assert_equal(wladek, street.at(5))
-    assert_equal(nil, street.at(4))
+    assert_equal(true, street.no_zombie_at?(4))
   end
 
   def test_zombies_can_go_if_cars_are_behind

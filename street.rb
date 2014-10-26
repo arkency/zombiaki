@@ -1,6 +1,6 @@
 class Street
   def initialize
-    @slots = Array.new(5)
+    @slots = Array.new(5, Place.new)
   end
 
   def put_zombie(block, zombie)
@@ -90,7 +90,7 @@ class Street
   end
 
   def no_zombie_at?(block)
-    at(block) == nil
+    at(block).class != Zombie
   end
 
   private
@@ -110,4 +110,8 @@ class Street
   def cant_move_back?(current_block, zombie)
     current_block(zombie) == 5 or zombie_at?(current_block+1)
   end
+end
+
+class Place
+
 end
