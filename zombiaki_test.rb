@@ -5,9 +5,9 @@ require './zombiaki'
 class ZombiesMoveForwardTestCase < Test::Unit::TestCase
   def test_zombies_turn_all_zombies_go
     app = ZombieGameApp.new
-    app.put_zombie_at_left_street(Zombie.new(1, "griszka"), block=4)
-    app.put_zombie_at_middle_street(Zombie.new(1, "wladek"), block=4)
-    app.put_zombie_at_right_street(Zombie.new(1, "misza" ),  block=4)
+    app.put(Zombie.new(1, "griszka"), 0, block=4)
+    app.put(Zombie.new(1, "wladek"), 1, block=4)
+    app.put(Zombie.new(1, "misza" ), 2, block=4)
 
     app.play_zombies_turn
 
@@ -97,14 +97,14 @@ class ShootingAtStreetsTestCase < Test::Unit::TestCase
 
   def test_shoot_at_left_street_doesnt_kill_zombie_at_middle
     app = ZombieGameApp.new
-    app.put_zombie_at_middle_street(one_life_zombie("wladek"), block=4)
+    app.put(one_life_zombie("wladek"), 1, block=4)
     app.make_shoot_at_left_street
     assert_equal("wladek", app.zombie_name_at_middle_street(4))
   end
 
   def test_shoot_at_middle_street_doesnt_kill_zombie_at_left
     app = ZombieGameApp.new
-    app.put_zombie_at_left_street(one_life_zombie("wladek"), block=4)
+    app.put(one_life_zombie("wladek"), 0, block=4)
     app.make_shoot_at_middle_street
     assert_equal("wladek", app.zombie_name_at_left_street(4))
   end
@@ -112,8 +112,8 @@ class ShootingAtStreetsTestCase < Test::Unit::TestCase
 
   def test_shoot_targets_first_zombie_on_the_left_street
     app = ZombieGameApp.new
-    app.put_zombie_at_left_street(one_life_zombie("griszka"), block=4)
-    app.put_zombie_at_left_street(one_life_zombie, block=3)
+    app.put(one_life_zombie("griszka"), 0, block=4)
+    app.put(one_life_zombie, 0, block=3)
     app.make_shoot_at_left_street
     assert_equal(true, app.no_zombie_at_left_street?(3))
     assert_equal("griszka", app.zombie_name_at_left_street(4))
@@ -121,15 +121,15 @@ class ShootingAtStreetsTestCase < Test::Unit::TestCase
 
   def test_shoot_at_middle_street_doesnt_kill_zombie_at_right
     app = ZombieGameApp.new
-    app.put_zombie_at_right_street(one_life_zombie("wladek"), block=4)
+    app.put(one_life_zombie("wladek"), 2, block=4)
     app.make_shoot_at_middle_street
     assert_equal("wladek", app.zombie_name_at_right_street(4))
   end
 
   def test_shoot_targets_first_zombie_on_the_right_street
     app = ZombieGameApp.new
-    app.put_zombie_at_right_street(one_life_zombie("griszka"), block=4)
-    app.put_zombie_at_right_street(one_life_zombie, block=3)
+    app.put(one_life_zombie("griszka"), 2, block=4)
+    app.put(one_life_zombie, 2, block=3)
     app.make_shoot_at_right_street
     assert_equal(true, app.no_zombie_at_right_street?(3))
     assert_equal("griszka", app.zombie_name_at_right_street(4))
@@ -205,7 +205,7 @@ class SteroidsTestCase < Test::Unit::TestCase
   def test_have_no_effect_on_zombie_without_injuries
     app = ZombieGameApp.new
     wladek = Zombie.new(lives=2)
-    app.put_zombie_at_middle_street(wladek, 4)
+    app.put(wladek, 1, 4)
 
     app.apply_effect_on_zombie(SteroidsEffect.new, wladek)
 
@@ -215,7 +215,7 @@ class SteroidsTestCase < Test::Unit::TestCase
   def test_make_zombie_healthy
     app = ZombieGameApp.new
     wladek = Zombie.new(lives=2)
-    app.put_zombie_at_middle_street(wladek, 4)
+    app.put(wladek, 1, 4)
 
     app.make_shoot_at_middle_street
     assert_equal(1, wladek.lives)
@@ -234,7 +234,7 @@ class PickaxeTestCase < Test::Unit::TestCase
   def test_remove_a_car
     app = ZombieGameApp.new
     trabant = Car.new("trabant")
-    app.put_car(0, 0, trabant)
+    app.put(trabant, 0, 0)
     app.apply_pickaxe_on_place(0, 0)
 
     assert_equal(true, app.place(0, 0).empty?)
@@ -245,7 +245,7 @@ class StreetOnFire < Test::Unit::TestCase
   def test_no_effect_on_empty_street
     app = ZombieGameApp.new
     wladek = Zombie.new(lives=2)
-    app.put_zombie_at_middle_street(wladek, 4)
+    app.put(wladek, 1, 4)
 
     app.apply_effect_on_street(0, StreetOnFireEffect.new)
 
@@ -256,8 +256,8 @@ class StreetOnFire < Test::Unit::TestCase
     app = ZombieGameApp.new
     wladek = Zombie.new(lives=2)
     griszka = Zombie.new(lives=1)
-    app.put_zombie_at_middle_street(wladek, 4)
-    app.put_zombie_at_middle_street(griszka, 3)
+    app.put(wladek, 1, 4)
+    app.put(griszka, 1, 3)
 
     app.apply_effect_on_street(1, StreetOnFireEffect.new)
 

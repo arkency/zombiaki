@@ -32,20 +32,8 @@ class ZombieGameApp
     @streets.each{|street| street.move_zombies_forward}
   end
 
-  def put_zombie_at_middle_street(zombie, block=4)
-    @middle_street.put(block, zombie)
-  end
-
-  def put_zombie_at_left_street(zombie, block=4)
-    @left_street.put(block, zombie)
-  end
-
-  def put_zombie_at_right_street(zombie, block=4)
-    @right_street.put(block, zombie)
-  end
-
-  def put_car(street_index, block, car)
-    place(street_index, block).put(car)
+  def put(zombie, street_index, block=4)
+    street_for_index(street_index).put(block, zombie)
   end
 
   def make_shoot_at_middle_street
