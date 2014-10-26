@@ -267,9 +267,18 @@ class StreetOnFire < Test::Unit::TestCase
 end
 
 class CardsStack < Test::Unit::TestCase
-  def test_stacks
+  def test_stacks_are_empty_at_the_beginning
     app = ZombieGameApp.new
     assert_equal(0, app.zombies_stack.count)
     assert_equal(0, app.humans_stack.count)
+  end
+
+  def test_generate_stacks
+    app = ZombieGameApp.new
+    app.generate_stacks
+
+
+    assert_equal(true, app.zombies_stack.count > 0)
+    assert_equal(true, app.humans_stack.count > 0)
   end
 end

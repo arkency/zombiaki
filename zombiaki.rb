@@ -20,6 +20,11 @@ class ZombieGameApp
     @humans_stack
   end
 
+  def generate_stacks
+    @zombies_stack << PickAxeEffect.new
+    @humans_stack  << StreetOnFireEffect.new
+  end
+
   def play_zombies_turn
     @streets.each{|street| street.move_zombies_forward}
   end
@@ -150,10 +155,14 @@ end
 
 class Stack
   def initialize
-    @cards = []
+    @effects = []
+  end
+
+  def <<(effect)
+    @effects << effect
   end
 
   def count
-    @cards.count
+    @effects.count
   end
 end
