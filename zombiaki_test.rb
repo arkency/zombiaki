@@ -201,3 +201,15 @@ class ZombieTestCase < Test::Unit::TestCase
   end
 end
 
+class SteroidsTestCase < Test::Unit::TestCase
+  def test_have_no_effect_on_zombie_without_injuries
+    app = ZombieGameApp.new
+    wladek = Zombie.new(lives=2)
+    app.put_zombie_at_middle_street(wladek, 4)
+
+    app.apply_steroids_on(wladek)
+
+    assert_equal(2, wladek.lives)
+  end
+end
+

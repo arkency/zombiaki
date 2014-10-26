@@ -66,6 +66,10 @@ class ZombieGameApp
     @left_street.no_zombie_at?(block)
   end
 
+  def apply_steroids_on(zombie)
+
+  end
+
   private
 
   def zombie_at_left_street(block)

@@ -24,4 +24,8 @@ class Zombie
   def can_move_back?
     not dead? and @moves_back_after_shoot
   end
+
+  def lives
+    @lives
+  end
 end
