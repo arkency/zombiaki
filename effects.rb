@@ -15,3 +15,9 @@ class StreetOnFireEffect
     street.zombies.each {|zombie| zombie.hit}
   end
 end
+
+class ShootEffect
+  def apply(street)
+    street.make_shoot
+  end
+end

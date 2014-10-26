@@ -33,10 +33,6 @@ class ZombieGameApp
     street_for_index(street_index).put(block, zombie)
   end
 
-  def make_shoot(street_index)
-    street_for_index(street_index).make_shoot
-  end
-
   def apply_effect_on_zombie(effect, zombie)
     effect.apply(zombie)
   end
