@@ -6,10 +6,7 @@ require './stack'
 
 class ZombieGameApp
   def initialize
-    @left_street   = Street.new
-    @middle_street = Street.new
-    @right_street = Street.new
-    @streets = [@left_street, @middle_street, @right_street]
+    @streets = [Street.new, Street.new, Street.new]
 
     @zombies_stack = Stack.new
     @humans_stack  = Stack.new
@@ -60,7 +57,6 @@ class ZombieGameApp
     PickAxeEffect.new.apply(place(street_index, block))
   end
 
-
   def place(street_index, block)
     street_for_index(street_index).at(block)
   end
@@ -68,14 +64,7 @@ class ZombieGameApp
   private
 
   def street_for_index(street_index)
-    case street_index
-      when 0
-        @left_street
-      when 1
-        @middle_street
-      when 2
-        @right_street
-    end
+    @streets[street_index]
   end
 end
 
