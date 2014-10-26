@@ -104,7 +104,15 @@ class Street
   end
 
   def car_blocking?(zombie)
-    @places.detect{|place| place.thing.class == Car && (@places.index(place) < current_block(zombie))}
+    @places.detect{|place| car_in_front_of_zombie?(place, zombie)}
+  end
+
+  def car_in_front_of_zombie?(place, zombie)
+    place.has_car? && place_in_front_of_zombie?(place, zombie)
+  end
+
+  def place_in_front_of_zombie?(place, zombie)
+    @places.index(place) < current_block(zombie)
   end
 
   def cant_move_back?(current_block, zombie)
@@ -136,5 +144,9 @@ class Place
   def name
     return "nil" if empty?
     return @thing.name
+  end
+
+  def has_car?
+    thing.class == Car
   end
 end
