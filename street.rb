@@ -48,6 +48,7 @@ class Street
 
   def move_zombie_back(zombie)
     current_block = current_block(zombie)
+    return if current_block == 5
     clear_slot(zombie)
     put_zombie(current_block+1, zombie)
   end

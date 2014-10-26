@@ -68,6 +68,15 @@ class ReflectorTestCase < Test::Unit::TestCase
     assert_equal(street.at(4), nil)
     assert_equal(street.at(5), wladek)
   end
+
+  def test_doesnt_move_back_when_zombie_on_last_block
+    street = Street.new
+    wladek = Zombie.new
+    street.put_zombie(5, wladek)
+    street.use_reflector
+
+    assert_equal(street.at(5), wladek)
+  end
 end
 
 class ShootingAtStreetsTestCase < Test::Unit::TestCase
