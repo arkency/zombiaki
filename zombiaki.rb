@@ -8,14 +8,17 @@ require './board'
 class ZombieGameApp
   def initialize(zombies_stack=Stack.new, humans_stack=Stack.new)
     @board = Board.new(zombies_stack, humans_stack)
+
+    @zombie_hand = Hand.new
+    @zombie_trash = Stack.new
   end
 
   def zombies_take_cards_to_hand
-
+    @zombie_hand << @board.zombies_stack.slice!(0, 4 - @zombie_hand.count)
   end
 
   def zombies_remove_card_to_trash(card)
-
+    @zombie_trash << card
   end
 
   def zombies_play_card(street_index, block, card)
@@ -70,5 +73,18 @@ class ZombieGameApp
     @board.place(street_index, block)
   end
 
+end
+
+class Hand
+  def initialize
+    @cards = []
+  end
+  def count
+    @cards.count
+  end
+
+  def <<(card)
+    @cards << card
+  end
 end
 

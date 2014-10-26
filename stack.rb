@@ -10,4 +10,8 @@ class Stack
   def count
     @effects.count
   end
+
+  def slice!(start_index, length)
+    @effects.slice!(start_index, length)
+  end
 end
