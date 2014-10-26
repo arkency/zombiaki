@@ -266,19 +266,86 @@ class StreetOnFire < Test::Unit::TestCase
   end
 end
 
-class CardsStack < Test::Unit::TestCase
-  def test_stacks_are_empty_at_the_beginning
-    board = Board.new
-    assert_equal(0, board.zombies_stack.count)
-    assert_equal(0, board.humans_stack.count)
-  end
+class FullGame < Test::Unit::TestCase
+  def test_full_game
+    zombie_stack = Stack.new
+    wladek_1 = Zombie.new(4, "wladek")
+    wladek_2 = Zombie.new(4, "wladek")
+    griszka_1 = Zombie.new(2, "griszka")
+    griszka_2 = Zombie.new(2, "griszka")
+    zombie_stack << ThingAppearsOnPlace.new(wladek_1)
+    zombie_stack << ThingAppearsOnPlace.new(wladek_2)
+    zombie_stack << ThingAppearsOnPlace.new(griszka_1)
+    zombie_stack << ThingAppearsOnPlace.new(griszka_2)
+    zombie_stack << SteroidsEffect.new
 
-  def test_generate_stacks
-    board = Board.new
-    board.generate_stacks
+    humans_stack = Stack.new
+    shoot_1 = ShootEffect.new
+    shoot_2 = ShootEffect.new
+    shoot_3 = ShootEffect.new
+    shoot_4 = ShootEffect.new
+
+    humans_stack << shoot_1
+    humans_stack << shoot_2
+    humans_stack << shoot_3
+    humans_stack << shoot_4
+
+    game = ZombieGameApp.new(zombie_stack, humans_stack)
+
+    game.zombies_take_cards_to_hand
+    game.zombies_remove_card_to_trash(griszka_2)
+
+    game.zombies_play_card(wladek_1, 0, 4)
+    game.zombies_play_card(wladek_2, 2, 4)
+    game.zombies_finish_move
+
+    game.humans_take_cards_to_hand
+    game.humans_remove_card_to_trash(shoot_1)
+    game.humans_play_card(shoot_2, 0, 0)
+    game.humans_play_card(shoot_3, 1, 0)
+    game.humans_finish_move
+
+    game.play_zombies_turn
+    #zombies now at 3
+    game.zombies_take_cards_to_hand
+    game.zombies_finish_move
+
+    game.play_humans_turn
+    game.humans_take_cards_to_hand
+    game.humans_finish_move
 
 
-    assert_equal(true, board.zombies_stack.count > 0)
-    assert_equal(true, board.humans_stack.count > 0)
+    game.play_zombies_turn
+    #zombies now at 2
+    game.zombies_take_cards_to_hand
+    game.zombies_finish_move
+
+    game.play_humans_turn
+    game.humans_take_cards_to_hand
+    game.humans_finish_move
+
+
+    game.play_zombies_turn
+    #zombies now at 1
+    game.zombies_take_cards_to_hand
+    game.zombies_finish_move
+
+    game.play_humans_turn
+    game.humans_take_cards_to_hand
+    game.humans_finish_move
+
+
+    game.play_zombies_turn
+    #zombies now at 0
+    game.zombies_take_cards_to_hand
+    game.zombies_finish_move
+
+    game.play_humans_turn
+    game.humans_take_cards_to_hand
+    game.humans_finish_move
+
+
+    game.play_zombies_turn
+    assert_equal(true, game.won_by_zombies?)
   end
 end

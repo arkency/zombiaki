@@ -1,11 +1,11 @@
 class Board
   attr_reader :zombies_stack, :humans_stack, :streets
 
-  def initialize
+  def initialize(zombies_stack, humans_stack)
     @streets = [Street.new, Street.new, Street.new]
 
-    @zombies_stack = Stack.new
-    @humans_stack  = Stack.new
+    @zombies_stack = zombies_stack
+    @humans_stack  = humans_stack
   end
 
   def generate_stacks
