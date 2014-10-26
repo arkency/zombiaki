@@ -53,8 +53,8 @@ class ZombieGameApp
     effect.apply(street_for_index(street_index))
   end
 
-  def apply_pickaxe_on_place(street_index, block)
-    PickAxeEffect.new.apply(place(street_index, block))
+  def apply_effect_on_place(street_index, block, effect)
+    effect.apply(place(street_index, block))
   end
 
   def place(street_index, block)

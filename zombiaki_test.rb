@@ -228,14 +228,14 @@ end
 class PickaxeTestCase < Test::Unit::TestCase
   def test_have_no_effect_on_empy_place
     app = ZombieGameApp.new
-    app.apply_pickaxe_on_place(0, 0)
+    app.apply_effect_on_place(0, 0, PickAxeEffect.new)
   end
 
   def test_remove_a_car
     app = ZombieGameApp.new
     trabant = Car.new("trabant")
     app.put(trabant, 0, 0)
-    app.apply_pickaxe_on_place(0, 0)
+    app.apply_effect_on_place(0, 0, PickAxeEffect.new)
 
     assert_equal(true, app.place(0, 0).empty?)
   end
