@@ -1,5 +1,8 @@
 require './zombie'
+require './car'
 require './street'
+require './effects'
+require './stack'
 
 class ZombieGameApp
   def initialize
@@ -129,40 +132,3 @@ class ZombieGameApp
   end
 end
 
-class Car
-  def initialize(name)
-    @name = name
-  end
-end
-
-class SteroidsEffect
-  def apply(zombie)
-    zombie.restore_health
-  end
-end
-
-class PickAxeEffect
-  def apply(place)
-    place.clear
-  end
-end
-
-class StreetOnFireEffect
-  def apply(street)
-    street.zombies.each {|zombie| zombie.hit}
-  end
-end
-
-class Stack
-  def initialize
-    @effects = []
-  end
-
-  def <<(effect)
-    @effects << effect
-  end
-
-  def count
-    @effects.count
-  end
-end
