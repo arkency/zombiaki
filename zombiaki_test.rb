@@ -58,6 +58,18 @@ class HumansMoveTestCase < Test::Unit::TestCase
   end
 end
 
+class ReflectorTestCase < Test::Unit::TestCase
+  def test_reflector_moves_zombies_back
+    street = Street.new
+    wladek = Zombie.new
+    street.put_zombie(4, wladek)
+    street.use_reflector
+
+    assert_equal(street.at(4), nil)
+    assert_equal(street.at(5), wladek)
+  end
+end
+
 class ShootingAtStreetsTestCase < Test::Unit::TestCase
 
   def test_shoot_at_left_street_doesnt_kill_zombie_at_middle

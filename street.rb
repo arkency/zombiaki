@@ -18,6 +18,10 @@ class Street
     clear_first_zombie             if first_zombie.dead?
   end
 
+  def use_reflector
+    zombies.each {|zombie| move_zombie_back(zombie)}
+  end
+
   def move_zombies_forward
     move_all_zombies
   end
