@@ -1,14 +1,14 @@
 class Street
   def initialize
-    @places = Array.new(5, Place.new)
+    @places = [Place.new, Place.new, Place.new, Place.new, Place.new]
   end
 
   def put_zombie(block, zombie)
-    @places[block] = zombie
+    @places[block].put(zombie)
   end
 
   def put_car(block, car)
-    @places[block] = car
+    @places[block].put(car)
   end
 
   def make_shoot
@@ -54,11 +54,11 @@ class Street
   end
 
   def zombies
-    @places.select{|slot| slot != nil && slot.class == Zombie}
+    @places.select{|place| ! place.empty? && place.thing.class == Zombie}.map(&:thing)
   end
 
   def cars
-    @places.select{|slot| slot != nil && slot.class == Car}
+    @places.select{|place| ! place.empty? && place.thing.class == Car}.map(&:thing)
   end
 
   def zombies_count
@@ -86,32 +86,55 @@ class Street
   end
 
   def zombie_at?(block)
-    at(block).class == Zombie
+    at(block).thing.class == Zombie
   end
 
   def no_zombie_at?(block)
-    at(block).class != Zombie
+    at(block).thing.class != Zombie
   end
 
   private
 
   def clear_slot(slot)
-    @places[current_block(slot)] = nil
+    @places[current_block(slot)].clear
   end
 
   def current_block(zombie)
-    @places.index(zombie)
+    @places.index(@places.detect{|place| place.thing == zombie})
   end
 
   def car_blocking?(zombie)
-    @places.detect{|slot| slot.class == Car && (@places.index(slot) < current_block(zombie))}
+    @places.detect{|place| place.thing.class == Car && (@places.index(place) < current_block(zombie))}
   end
 
   def cant_move_back?(current_block, zombie)
-    current_block(zombie) == 5 or zombie_at?(current_block+1)
+    current_block(zombie) == 4 or zombie_at?(current_block+1)
   end
 end
 
 class Place
+  def initialize
+    @thing = nil
+  end
 
+  def put(thing)
+    @thing = thing
+  end
+
+  def thing
+    @thing
+  end
+
+  def clear
+    @thing = nil
+  end
+
+  def empty?
+    @thing == nil
+  end
+
+  def name
+    return "nil" if empty?
+    return @thing.name
+  end
 end

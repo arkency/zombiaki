@@ -13,16 +13,16 @@ class ZombieGameApp
     @streets.each{|street| street.move_zombies_forward}
   end
 
-  def put_zombie_at_middle_street(zombie, block=5)
-    @middle_street.put_zombie(block-1, zombie)
+  def put_zombie_at_middle_street(zombie, block=4)
+    @middle_street.put_zombie(block, zombie)
   end
 
-  def put_zombie_at_left_street(zombie, block=5)
-    @left_street.put_zombie(block-1, zombie)
+  def put_zombie_at_left_street(zombie, block=4)
+    @left_street.put_zombie(block, zombie)
   end
 
-  def put_zombie_at_right_street(zombie, block=5)
-    @right_street.put_zombie(block-1, zombie)
+  def put_zombie_at_right_street(zombie, block=4)
+    @right_street.put_zombie(block, zombie)
   end
 
   def make_shoot_at_middle_street
@@ -55,30 +55,30 @@ class ZombieGameApp
   end
 
   def no_zombie_at_middle_street?(block)
-    @middle_street.no_zombie_at?(block-1)
+    @middle_street.no_zombie_at?(block)
   end
 
   def no_zombie_at_left_street?(block)
-    @left_street.no_zombie_at?(block-1)
+    @left_street.no_zombie_at?(block)
   end
 
   def no_zombie_at_right_street?(block)
-    @left_street.no_zombie_at?(block-1)
+    @left_street.no_zombie_at?(block)
   end
 
   private
 
   def zombie_at_left_street(block)
-    @left_street.at(block-1)
+    @left_street.at(block)
   end
 
   def zombie_at_middle_street(block)
-    @middle_street.at(block-1)
+    @middle_street.at(block)
   end
 
 
   def zombie_at_right_street(block)
-    @right_street.at(block-1)
+    @right_street.at(block)
   end
 end
 
