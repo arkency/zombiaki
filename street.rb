@@ -1,14 +1,14 @@
 class Street
   def initialize
-    @slots = Array.new(5, Place.new)
+    @places = Array.new(5, Place.new)
   end
 
   def put_zombie(block, zombie)
-    @slots[block] = zombie
+    @places[block] = zombie
   end
 
   def put_car(block, car)
-    @slots[block] = car
+    @places[block] = car
   end
 
   def make_shoot
@@ -54,11 +54,11 @@ class Street
   end
 
   def zombies
-    @slots.select{|slot| slot != nil && slot.class == Zombie}
+    @places.select{|slot| slot != nil && slot.class == Zombie}
   end
 
   def cars
-    @slots.select{|slot| slot != nil && slot.class == Car}
+    @places.select{|slot| slot != nil && slot.class == Car}
   end
 
   def zombies_count
@@ -82,7 +82,7 @@ class Street
   end
 
   def at(block)
-    @slots[block]
+    @places[block]
   end
 
   def zombie_at?(block)
@@ -96,15 +96,15 @@ class Street
   private
 
   def clear_slot(slot)
-    @slots[current_block(slot)] = nil
+    @places[current_block(slot)] = nil
   end
 
   def current_block(zombie)
-    @slots.index(zombie)
+    @places.index(zombie)
   end
 
   def car_blocking?(zombie)
-    @slots.detect{|slot| slot.class == Car && (@slots.index(slot) < current_block(zombie))}
+    @places.detect{|slot| slot.class == Car && (@places.index(slot) < current_block(zombie))}
   end
 
   def cant_move_back?(current_block, zombie)
