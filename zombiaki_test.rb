@@ -207,7 +207,7 @@ class SteroidsTestCase < Test::Unit::TestCase
     wladek = Zombie.new(lives=2)
     app.put_zombie_at_middle_street(wladek, 4)
 
-    app.apply_steroids_on(wladek)
+    app.apply_effect_on_zombie(SteroidsEffect.new, wladek)
 
     assert_equal(2, wladek.lives)
   end
@@ -219,7 +219,7 @@ class SteroidsTestCase < Test::Unit::TestCase
 
     app.make_shoot_at_middle_street
     assert_equal(1, wladek.lives)
-    app.apply_steroids_on(wladek)
+    app.apply_effect_on_zombie(SteroidsEffect.new, wladek)
 
     assert_equal(2, wladek.lives)
   end

@@ -66,8 +66,8 @@ class ZombieGameApp
     @left_street.no_zombie_at?(block)
   end
 
-  def apply_steroids_on(zombie)
-    zombie.restore_health
+  def apply_effect_on_zombie(effect, zombie)
+    effect.apply(zombie)
   end
 
   private
@@ -89,5 +89,11 @@ end
 class Car
   def initialize(name)
     @name = name
+  end
+end
+
+class SteroidsEffect
+  def apply(zombie)
+    zombie.restore_health
   end
 end
