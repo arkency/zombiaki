@@ -40,32 +40,12 @@ class ZombieGameApp
     street_for_index(street_index).make_shoot
   end
 
-  def zombie_name_at_middle_street(block)
-    zombie_at_middle_street(block).name
+  def zombie_name(street_index, block)
+    street_for_index(street_index).at(block).name
   end
 
-  def zombie_name_at_left_street(block)
-    zombie_at_left_street(block).name
-  end
-
-  def zombie_name_at_right_street(block)
-    zombie_at_right_street(block).name
-  end
-
-  def zombies_at_middle_street_count
-    @middle_street.zombies_count
-  end
-
-  def no_zombie_at_middle_street?(block)
-    @middle_street.no_zombie_at?(block)
-  end
-
-  def no_zombie_at_left_street?(block)
-    @left_street.no_zombie_at?(block)
-  end
-
-  def no_zombie_at_right_street?(block)
-    @left_street.no_zombie_at?(block)
+  def no_zombie_at?(street_index, block)
+    street_for_index(street_index).no_zombie_at?(block)
   end
 
   def apply_effect_on_zombie(effect, zombie)
@@ -86,18 +66,6 @@ class ZombieGameApp
   end
 
   private
-
-
-  def zombie_at_left_street(block)
-    @left_street.at(block)
-  end
-
-  def zombie_at_middle_street(block)
-    @middle_street.at(block)
-  end
-  def zombie_at_right_street(block)
-    @right_street.at(block)
-  end
 
   def street_for_index(street_index)
     case street_index
