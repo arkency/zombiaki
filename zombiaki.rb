@@ -3,30 +3,15 @@ require './car'
 require './street'
 require './effects'
 require './stack'
+require './board'
 
 class ZombieGameApp
   def initialize
-    @streets = [Street.new, Street.new, Street.new]
-
-    @zombies_stack = Stack.new
-    @humans_stack  = Stack.new
-  end
-
-  def zombies_stack
-    @zombies_stack
-  end
-
-  def humans_stack
-    @humans_stack
-  end
-
-  def generate_stacks
-    @zombies_stack << PickAxeEffect.new
-    @humans_stack  << StreetOnFireEffect.new
+    @board = Board.new
   end
 
   def play_zombies_turn
-    @streets.each{|street| street.move_zombies_forward}
+    @board.streets.each{|street| street.move_zombies_forward}
   end
 
   def apply_effect_on_zombie(effect, zombie)
@@ -34,7 +19,7 @@ class ZombieGameApp
   end
 
   def apply_effect_on_street(street_index, effect)
-    effect.apply(street_for_index(street_index))
+    effect.apply(@board.street_for_index(street_index))
   end
 
   def apply_effect_on_place(street_index, block, effect)
@@ -42,13 +27,8 @@ class ZombieGameApp
   end
 
   def place(street_index, block)
-    street_for_index(street_index).at(block)
+    @board.place(street_index, block)
   end
 
-  private
-
-  def street_for_index(street_index)
-    @streets[street_index]
-  end
 end
 
