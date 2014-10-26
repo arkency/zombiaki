@@ -211,5 +211,17 @@ class SteroidsTestCase < Test::Unit::TestCase
 
     assert_equal(2, wladek.lives)
   end
+
+  def test_make_zombie_healthy
+    app = ZombieGameApp.new
+    wladek = Zombie.new(lives=2)
+    app.put_zombie_at_middle_street(wladek, 4)
+
+    app.make_shoot_at_middle_street
+    assert_equal(1, wladek.lives)
+    app.apply_steroids_on(wladek)
+
+    assert_equal(2, wladek.lives)
+  end
 end
 

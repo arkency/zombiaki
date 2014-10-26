@@ -67,7 +67,7 @@ class ZombieGameApp
   end
 
   def apply_steroids_on(zombie)
-
+    zombie.restore_health
   end
 
   private
