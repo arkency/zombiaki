@@ -33,15 +33,15 @@ class ZombieGameApp
   end
 
   def put_zombie_at_middle_street(zombie, block=4)
-    @middle_street.put_zombie(block, zombie)
+    @middle_street.put(block, zombie)
   end
 
   def put_zombie_at_left_street(zombie, block=4)
-    @left_street.put_zombie(block, zombie)
+    @left_street.put(block, zombie)
   end
 
   def put_zombie_at_right_street(zombie, block=4)
-    @right_street.put_zombie(block, zombie)
+    @right_street.put(block, zombie)
   end
 
   def put_car(street_index, block, car)

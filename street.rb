@@ -5,12 +5,8 @@ class Street
     @places = [Place.new, Place.new, Place.new, Place.new, Place.new]
   end
 
-  def put_zombie(block, zombie)
-    @places[block].put(zombie)
-  end
-
-  def put_car(block, car)
-    @places[block].put(car)
+  def put(block, thing)
+    @places[block].put(thing)
   end
 
   def make_shoot
@@ -39,20 +35,20 @@ class Street
   def move_forward(zombie)
     current_block = current_block(zombie)
     clear_place(zombie)
-    put_zombie(current_block-1, zombie)
+    put(current_block-1, zombie)
   end
 
   def move_car_forward(car)
     current_block = current_block(car)
     clear_place(car)
-    put_car(current_block+1, car)
+    put(current_block+1, car)
   end
 
   def move_zombie_back(zombie)
     current_block = current_block(zombie)
     return if cant_move_back?(current_block, zombie)
     clear_place(zombie)
-    put_zombie(current_block+1, zombie)
+    put(current_block+1, zombie)
   end
 
   def zombies

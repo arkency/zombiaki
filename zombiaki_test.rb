@@ -23,8 +23,8 @@ class ZombiesMoveForwardTestCase < Test::Unit::TestCase
     street = Street.new
     wladek = Zombie.new(lives=1, name="wladek")
     trabant = Car.new("trabant")
-    street.put_zombie(4, wladek)
-    street.put_car(0, trabant)
+    street.put(4, wladek)
+    street.put(0, trabant)
 
     street.move_zombies_forward
 
@@ -36,8 +36,8 @@ class ZombiesMoveForwardTestCase < Test::Unit::TestCase
     street = Street.new
     wladek = Zombie.new(lives=1, name="wladek")
     trabant = Car.new("trabant")
-    street.put_zombie(2, wladek)
-    street.put_car(3, trabant)
+    street.put(2, wladek)
+    street.put(3, trabant)
 
     street.move_zombies_forward
 
@@ -50,7 +50,7 @@ class HumansMoveTestCase < Test::Unit::TestCase
   def test_cars_go_forward
     street = Street.new
     trabant = Car.new("trabant")
-    street.put_car(3, trabant)
+    street.put(3, trabant)
     street.move_humans_forward
 
     assert_equal(trabant, street.at(4).thing)
@@ -62,7 +62,7 @@ class ReflectorTestCase < Test::Unit::TestCase
   def test_reflector_moves_zombies_back
     street = Street.new
     wladek = Zombie.new
-    street.put_zombie(3, wladek)
+    street.put(3, wladek)
     street.use_reflector
 
     assert_equal(street.at(3).thing, nil)
@@ -72,7 +72,7 @@ class ReflectorTestCase < Test::Unit::TestCase
   def test_doesnt_move_back_when_zombie_on_last_block
     street = Street.new
     wladek = Zombie.new
-    street.put_zombie(4, wladek)
+    street.put(4, wladek)
     street.use_reflector
 
     assert_equal(street.at(4).thing, wladek)
@@ -83,8 +83,8 @@ class ReflectorTestCase < Test::Unit::TestCase
     wladek = Zombie.new
     griszka = Zombie.new
 
-    street.put_zombie(4, wladek)
-    street.put_zombie(3, griszka)
+    street.put(4, wladek)
+    street.put(3, griszka)
 
     street.use_reflector
 
@@ -152,8 +152,8 @@ class StreetTestCase < Test::Unit::TestCase
     street  = Street.new
     wladek  = Zombie.new(lives=1, name="wladek")
     griszka = Zombie.new(lives=1, name="griszka")
-    street.put_zombie(4, wladek)
-    street.put_zombie(3, griszka)
+    street.put(4, wladek)
+    street.put(3, griszka)
     street.make_shoot
     assert griszka.dead?
     assert ! wladek.dead?
@@ -162,7 +162,7 @@ class StreetTestCase < Test::Unit::TestCase
   def test_shoot_moves_back_if_alive
     street  = Street.new
     wladek  = Zombie.new(lives=2, name="wladek")
-    street.put_zombie(3, wladek)
+    street.put(3, wladek)
     street.make_shoot
 
     assert_equal(nil,    street.at(3).thing)
@@ -172,7 +172,7 @@ class StreetTestCase < Test::Unit::TestCase
   def test_shoot_doesnt_move_back_if_borys
     street  = Street.new
     borys  = Zombie.new(lives=2, name="borys", moves_back_after_shoot=false)
-    street.put_zombie(3, borys)
+    street.put(3, borys)
     street.make_shoot
 
     assert_equal(borys, street.at(3).thing)
