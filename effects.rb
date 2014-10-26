@@ -21,3 +21,13 @@ class ShootEffect
     street.make_shoot
   end
 end
+
+class ThingAppearsOnPlace
+  def initialize(thing)
+    @thing = thing
+  end
+
+  def apply(place)
+    place.put(@thing)
+  end
+end

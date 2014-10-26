@@ -29,10 +29,6 @@ class ZombieGameApp
     @streets.each{|street| street.move_zombies_forward}
   end
 
-  def put(zombie, street_index, block=4)
-    street_for_index(street_index).put(block, zombie)
-  end
-
   def apply_effect_on_zombie(effect, zombie)
     effect.apply(zombie)
   end
