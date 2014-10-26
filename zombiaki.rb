@@ -25,6 +25,10 @@ class ZombieGameApp
     @right_street.put_zombie(block, zombie)
   end
 
+  def put_car(street_index, block, car)
+    place(street_index, block).put(car)
+  end
+
   def make_shoot_at_middle_street
     @middle_street.make_shoot
   end
@@ -71,10 +75,16 @@ class ZombieGameApp
   end
 
   def apply_pickaxe_on_place(street_index, block)
-    PickAxeEffect.new.apply(street_for_index(street_index).at(block))
+    PickAxeEffect.new.apply(place(street_index, block))
+  end
+
+
+  def place(street_index, block)
+    street_for_index(street_index).at(block)
   end
 
   private
+
 
   def zombie_at_left_street(block)
     @left_street.at(block)
@@ -113,6 +123,6 @@ end
 
 class PickAxeEffect
   def apply(place)
-
+    place.clear
   end
 end

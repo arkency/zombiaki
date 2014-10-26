@@ -230,5 +230,14 @@ class PickaxeTestCase < Test::Unit::TestCase
     app = ZombieGameApp.new
     app.apply_pickaxe_on_place(0, 0)
   end
+
+  def test_remove_a_car
+    app = ZombieGameApp.new
+    trabant = Car.new("trabant")
+    app.put_car(0, 0, trabant)
+    app.apply_pickaxe_on_place(0, 0)
+
+    assert_equal(true, app.place(0, 0).empty?)
+  end
 end
 
