@@ -225,3 +225,10 @@ class SteroidsTestCase < Test::Unit::TestCase
   end
 end
 
+class PickaxeTestCase < Test::Unit::TestCase
+  def test_have_no_effect_on_empy_place
+    app = ZombieGameApp.new
+    app.apply_pickaxe_on_place(0, 0)
+  end
+end
+

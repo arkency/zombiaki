@@ -70,6 +70,10 @@ class ZombieGameApp
     effect.apply(zombie)
   end
 
+  def apply_pickaxe_on_place(street_index, block)
+    PickAxeEffect.new.apply(street_for_index(street_index).at(block))
+  end
+
   private
 
   def zombie_at_left_street(block)
@@ -79,10 +83,19 @@ class ZombieGameApp
   def zombie_at_middle_street(block)
     @middle_street.at(block)
   end
-
-
   def zombie_at_right_street(block)
     @right_street.at(block)
+  end
+
+  def street_for_index(street_index)
+    case street_index
+      when 0
+        @left_street
+      when 1
+        @middle_street
+      when 2
+        @right_street
+    end
   end
 end
 
@@ -95,5 +108,11 @@ end
 class SteroidsEffect
   def apply(zombie)
     zombie.restore_health
+  end
+end
+
+class PickAxeEffect
+  def apply(place)
+
   end
 end
