@@ -251,5 +251,18 @@ class StreetOnFire < Test::Unit::TestCase
 
     assert_equal(2, wladek.lives)
   end
+
+  def test_adds_one_injury_to_all_zombies_on_the_street
+    app = ZombieGameApp.new
+    wladek = Zombie.new(lives=2)
+    griszka = Zombie.new(lives=1)
+    app.put_zombie_at_middle_street(wladek, 4)
+    app.put_zombie_at_middle_street(griszka, 3)
+
+    app.apply_effect_on_street(1, StreetOnFireEffect.new)
+
+    assert_equal(1, wladek.lives)
+    assert_equal(0, griszka.lives)
+  end
 end
 

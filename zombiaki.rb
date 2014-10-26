@@ -133,6 +133,6 @@ end
 
 class StreetOnFireEffect
   def apply(street)
-
+    street.zombies.each {|zombie| zombie.hit}
   end
 end
