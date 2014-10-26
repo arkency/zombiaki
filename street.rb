@@ -36,20 +36,20 @@ class Street
 
   def move_forward(zombie)
     current_block = current_block(zombie)
-    clear_slot(zombie)
+    clear_place(zombie)
     put_zombie(current_block-1, zombie)
   end
 
   def move_car_forward(car)
     current_block = current_block(car)
-    clear_slot(car)
+    clear_place(car)
     put_car(current_block+1, car)
   end
 
   def move_zombie_back(zombie)
     current_block = current_block(zombie)
     return if cant_move_back?(current_block, zombie)
-    clear_slot(zombie)
+    clear_place(zombie)
     put_zombie(current_block+1, zombie)
   end
 
@@ -74,7 +74,7 @@ class Street
   end
 
   def clear_first_zombie
-    clear_slot(first_zombie)
+    clear_place(first_zombie)
   end
 
   def injury_first_zombie
@@ -95,7 +95,7 @@ class Street
 
   private
 
-  def clear_slot(slot)
+  def clear_place(slot)
     @places[current_block(slot)].clear
   end
 
