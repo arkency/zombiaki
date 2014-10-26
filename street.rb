@@ -54,7 +54,7 @@ class Street
   end
 
   def zombies
-    @places.select{|place| ! place.empty? && place.thing.class == Zombie}.map(&:thing)
+    @places.select{|place| place.has_zombie?}.map(&:thing)
   end
 
   def cars
@@ -86,11 +86,11 @@ class Street
   end
 
   def zombie_at?(block)
-    at(block).thing.class == Zombie
+    at(block).has_zombie?
   end
 
   def no_zombie_at?(block)
-    at(block).thing.class != Zombie
+    at(block).no_zombie?
   end
 
   private
@@ -148,5 +148,13 @@ class Place
 
   def has_car?
     thing.class == Car
+  end
+
+  def has_zombie?
+    thing.class == Zombie
+  end
+
+  def no_zombie?
+    ! has_zombie?
   end
 end
