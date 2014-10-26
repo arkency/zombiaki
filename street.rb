@@ -48,7 +48,7 @@ class Street
 
   def move_zombie_back(zombie)
     current_block = current_block(zombie)
-    return if current_block == 5 or zombie_at?(current_block+1)
+    return if cant_move_back?(current_block, zombie)
     clear_slot(zombie)
     put_zombie(current_block+1, zombie)
   end
@@ -105,5 +105,9 @@ class Street
 
   def car_blocking?(zombie)
     @slots.detect{|slot| slot.class == Car && (@slots.index(slot) < current_block(zombie))}
+  end
+
+  def cant_move_back?(current_block, zombie)
+    current_block(zombie) == 5 or zombie_at?(current_block+1)
   end
 end
