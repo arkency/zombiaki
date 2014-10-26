@@ -98,14 +98,14 @@ class ShootingAtStreetsTestCase < Test::Unit::TestCase
   def test_shoot_at_left_street_doesnt_kill_zombie_at_middle
     app = ZombieGameApp.new
     app.put(one_life_zombie("wladek"), 1, block=4)
-    app.make_shoot_at_left_street
+    app.make_shoot(0)
     assert_equal("wladek", app.zombie_name_at_middle_street(4))
   end
 
   def test_shoot_at_middle_street_doesnt_kill_zombie_at_left
     app = ZombieGameApp.new
     app.put(one_life_zombie("wladek"), 0, block=4)
-    app.make_shoot_at_middle_street
+    app.make_shoot(1)
     assert_equal("wladek", app.zombie_name_at_left_street(4))
   end
 
@@ -114,7 +114,7 @@ class ShootingAtStreetsTestCase < Test::Unit::TestCase
     app = ZombieGameApp.new
     app.put(one_life_zombie("griszka"), 0, block=4)
     app.put(one_life_zombie, 0, block=3)
-    app.make_shoot_at_left_street
+    app.make_shoot(0)
     assert_equal(true, app.no_zombie_at_left_street?(3))
     assert_equal("griszka", app.zombie_name_at_left_street(4))
   end
@@ -122,7 +122,7 @@ class ShootingAtStreetsTestCase < Test::Unit::TestCase
   def test_shoot_at_middle_street_doesnt_kill_zombie_at_right
     app = ZombieGameApp.new
     app.put(one_life_zombie("wladek"), 2, block=4)
-    app.make_shoot_at_middle_street
+    app.make_shoot(1)
     assert_equal("wladek", app.zombie_name_at_right_street(4))
   end
 
@@ -130,7 +130,7 @@ class ShootingAtStreetsTestCase < Test::Unit::TestCase
     app = ZombieGameApp.new
     app.put(one_life_zombie("griszka"), 2, block=4)
     app.put(one_life_zombie, 2, block=3)
-    app.make_shoot_at_right_street
+    app.make_shoot(2)
     assert_equal(true, app.no_zombie_at_right_street?(3))
     assert_equal("griszka", app.zombie_name_at_right_street(4))
   end
@@ -217,7 +217,7 @@ class SteroidsTestCase < Test::Unit::TestCase
     wladek = Zombie.new(lives=2)
     app.put(wladek, 1, 4)
 
-    app.make_shoot_at_middle_street
+    app.make_shoot(1)
     assert_equal(1, wladek.lives)
     app.apply_effect_on_zombie(SteroidsEffect.new, wladek)
 

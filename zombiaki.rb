@@ -36,17 +36,8 @@ class ZombieGameApp
     street_for_index(street_index).put(block, zombie)
   end
 
-  def make_shoot_at_middle_street
-    @middle_street.make_shoot
-  end
-
-  def make_shoot_at_left_street
-    @left_street.make_shoot
-  end
-
-
-  def make_shoot_at_right_street
-    @right_street.make_shoot
+  def make_shoot(street_index)
+    street_for_index(street_index).make_shoot
   end
 
   def zombie_name_at_middle_street(block)
