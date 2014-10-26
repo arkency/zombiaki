@@ -7,6 +7,17 @@ class ZombieGameApp
     @middle_street = Street.new
     @right_street = Street.new
     @streets = [@left_street, @middle_street, @right_street]
+
+    @zombies_stack = Stack.new
+    @humans_stack  = Stack.new
+  end
+
+  def zombies_stack
+    @zombies_stack
+  end
+
+  def humans_stack
+    @humans_stack
   end
 
   def play_zombies_turn
@@ -134,5 +145,15 @@ end
 class StreetOnFireEffect
   def apply(street)
     street.zombies.each {|zombie| zombie.hit}
+  end
+end
+
+class Stack
+  def initialize
+    @cards = []
+  end
+
+  def count
+    @cards.count
   end
 end

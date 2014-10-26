@@ -266,3 +266,10 @@ class StreetOnFire < Test::Unit::TestCase
   end
 end
 
+class CardsStack < Test::Unit::TestCase
+  def test_stacks
+    app = ZombieGameApp.new
+    assert_equal(0, app.zombies_stack.count)
+    assert_equal(0, app.humans_stack.count)
+  end
+end
