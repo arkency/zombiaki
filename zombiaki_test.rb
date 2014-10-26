@@ -241,3 +241,15 @@ class PickaxeTestCase < Test::Unit::TestCase
   end
 end
 
+class StreetOnFire < Test::Unit::TestCase
+  def test_no_effect_on_empty_street
+    app = ZombieGameApp.new
+    wladek = Zombie.new(lives=2)
+    app.put_zombie_at_middle_street(wladek, 4)
+
+    app.apply_effect_on_street(0, StreetOnFireEffect.new)
+
+    assert_equal(2, wladek.lives)
+  end
+end
+

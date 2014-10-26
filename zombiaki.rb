@@ -74,6 +74,10 @@ class ZombieGameApp
     effect.apply(zombie)
   end
 
+  def apply_effect_on_street(street_index, effect)
+    effect.apply(street_for_index(street_index))
+  end
+
   def apply_pickaxe_on_place(street_index, block)
     PickAxeEffect.new.apply(place(street_index, block))
   end
@@ -124,5 +128,11 @@ end
 class PickAxeEffect
   def apply(place)
     place.clear
+  end
+end
+
+class StreetOnFireEffect
+  def apply(street)
+
   end
 end
