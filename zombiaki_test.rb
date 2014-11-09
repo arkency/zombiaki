@@ -298,7 +298,6 @@ class FullGame < Test::Unit::TestCase
     game.zombies_play_card(wladek_1, 0, 4)
     game.zombies_play_card(wladek_2, 2, 4)
     game.zombies_finish_move
-    assert_equal(false, game.won_by_zombies?)
 
     game.humans_take_cards_to_hand
     game.humans_remove_card_to_trash(shoot_1)
@@ -307,6 +306,8 @@ class FullGame < Test::Unit::TestCase
     game.humans_finish_move
 
     game.play_zombies_turn
+    assert_equal(false, game.won_by_zombies?)
+
     #zombies now at 3
     game.zombies_take_cards_to_hand
     game.zombies_finish_move
@@ -317,6 +318,7 @@ class FullGame < Test::Unit::TestCase
 
 
     game.play_zombies_turn
+    assert_equal(false, game.won_by_zombies?)
     #zombies now at 2
     game.zombies_take_cards_to_hand
     game.zombies_finish_move
@@ -327,6 +329,7 @@ class FullGame < Test::Unit::TestCase
 
 
     game.play_zombies_turn
+    assert_equal(false, game.won_by_zombies?)
     #zombies now at 1
     game.zombies_take_cards_to_hand
     game.zombies_finish_move
@@ -337,6 +340,7 @@ class FullGame < Test::Unit::TestCase
 
 
     game.play_zombies_turn
+    assert_equal(true, game.won_by_zombies?)
     #zombies now at 0
     game.zombies_take_cards_to_hand
     game.zombies_finish_move
@@ -347,6 +351,5 @@ class FullGame < Test::Unit::TestCase
 
 
     game.play_zombies_turn
-    assert_equal(true, game.won_by_zombies?)
   end
 end

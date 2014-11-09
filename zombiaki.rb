@@ -46,7 +46,7 @@ class ZombieGameApp
   end
 
   def won_by_zombies?
-    true
+    @board.any_zombie_on_barricade?
   end
 
   def play_zombies_turn

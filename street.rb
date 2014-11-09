@@ -2,11 +2,16 @@ require './place'
 
 class Street
   def initialize
-    @places = [Place.new, Place.new, Place.new, Place.new, Place.new]
+    @barricade = Place.new
+    @places = [@barricade, Place.new, Place.new, Place.new, Place.new, Place.new]
   end
 
   def put(block, thing)
     @places[block].put(thing)
+  end
+
+  def zombie_at_barricade?
+    @barricade.has_zombie?
   end
 
   def make_shoot

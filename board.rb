@@ -20,4 +20,8 @@ class Board
   def place(street_index, block)
     street_for_index(street_index).at(block)
   end
+
+  def any_zombie_on_barricade?
+    ! @streets.detect{|street| street.zombie_at_barricade?}.nil?
+  end
 end
