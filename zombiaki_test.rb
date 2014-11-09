@@ -269,14 +269,14 @@ end
 class FullGame < Test::Unit::TestCase
   def test_full_game
     zombie_stack = Stack.new
-    wladek_1 = Zombie.new(4, "wladek")
-    wladek_2 = Zombie.new(4, "wladek")
-    griszka_1 = Zombie.new(2, "griszka")
-    griszka_2 = Zombie.new(2, "griszka")
-    zombie_stack << ThingAppearsOnPlace.new(wladek_1)
-    zombie_stack << ThingAppearsOnPlace.new(wladek_2)
-    zombie_stack << ThingAppearsOnPlace.new(griszka_1)
-    zombie_stack << ThingAppearsOnPlace.new(griszka_2)
+    wladek_1 = ThingAppearsOnPlace.new(Zombie.new(4, "wladek"))
+    wladek_2 = ThingAppearsOnPlace.new(Zombie.new(4, "wladek"))
+    griszka_1 = ThingAppearsOnPlace.new(Zombie.new(2, "griszka"))
+    griszka_2 = ThingAppearsOnPlace.new(Zombie.new(2, "griszka"))
+    zombie_stack << wladek_1
+    zombie_stack << wladek_2
+    zombie_stack << griszka_1
+    zombie_stack << griszka_2
     zombie_stack << SteroidsEffect.new
 
     humans_stack = Stack.new
@@ -298,6 +298,7 @@ class FullGame < Test::Unit::TestCase
     game.zombies_play_card(wladek_1, 0, 4)
     game.zombies_play_card(wladek_2, 2, 4)
     game.zombies_finish_move
+    assert_equal(false, game.won_by_zombies?)
 
     game.humans_take_cards_to_hand
     game.humans_remove_card_to_trash(shoot_1)

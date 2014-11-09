@@ -21,8 +21,8 @@ class ZombieGameApp
     @zombie_trash << card
   end
 
-  def zombies_play_card(street_index, block, card)
-
+  def zombies_play_card(card, street_index, block)
+    apply_effect_on_place(street_index, block, card)
   end
 
   def zombies_finish_move
