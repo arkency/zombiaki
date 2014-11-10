@@ -148,4 +148,25 @@ class FullGame < Test::Unit::TestCase
     end
   end
 
+  def test_zombies_have_to_remove_card_to_trash
+    zombie_stack = Stack.new
+    wladek = ThingAppearsOnPlace.new(Zombie.new(4, "wladek"))
+    zombie_stack << wladek
+    zombie_stack << ThingAppearsOnPlace.new(Zombie.new(4, "wladek"))
+    zombie_stack << ThingAppearsOnPlace.new(Zombie.new(2, "griszka"))
+    zombie_stack << ThingAppearsOnPlace.new(Zombie.new(2, "griszka"))
+    zombie_stack << ThingAppearsOnPlace.new(Zombie.new(2, "griszka"))
+    zombie_stack << Dawn.new
+
+    humans_stack = Stack.new
+
+    game = ZombieGameApp.new(zombie_stack, humans_stack)
+
+    game.play_zombies_turn
+    game.zombies_take_cards_to_hand
+    assert_raises CardNotRemoved do
+      game.zombies_play_card_on_place(wladek, 0, 5)
+    end
+  end
+
 end

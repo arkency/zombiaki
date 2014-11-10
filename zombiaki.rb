@@ -25,6 +25,7 @@ class ZombieGameApp
   end
 
   def zombies_play_card_on_place(card, street_index, block)
+    raise CardNotRemoved if @zombie_hand.count == 4
     raise InvalidMove.new if card.class == ThingAppearsOnPlace && block != 5
     apply_effect_on_place(street_index, block, card)
   end
@@ -103,6 +104,6 @@ end
 class InvalidMove < StandardError
 end
 
-class CardNotInHand < StandardError
+class CardNotRemoved < StandardError
 
 end
