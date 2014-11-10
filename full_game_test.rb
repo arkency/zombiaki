@@ -172,7 +172,7 @@ class FullGame < Test::Unit::TestCase
     end
   end
 
-  def test_zombies_need_to_take_cards_to_hand
+  def test_zombies_need_to_take_cards_to_hand_before_playing
 
     zombie_stack = Stack.new
     wladek = ThingAppearsOnPlace.new(Zombie.new(4, "wladek"))
@@ -190,6 +190,28 @@ class FullGame < Test::Unit::TestCase
     game.play_zombies_turn
     assert_raises CardsNotTakenToHand do
       game.zombies_play_card_on_place(wladek, 0, 5)
+    end
+  end
+
+  def test_zombies_need_to_take_cards_to_hand_before_removing
+
+    zombie_stack = Stack.new
+    wladek = ThingAppearsOnPlace.new(Zombie.new(4, "wladek"))
+    griszka = ThingAppearsOnPlace.new(Zombie.new(2, "griszka"))
+    zombie_stack << wladek
+    zombie_stack << ThingAppearsOnPlace.new(Zombie.new(4, "wladek"))
+    zombie_stack << griszka
+    zombie_stack << ThingAppearsOnPlace.new(Zombie.new(2, "griszka"))
+    zombie_stack << ThingAppearsOnPlace.new(Zombie.new(2, "griszka"))
+    zombie_stack << Dawn.new
+
+    humans_stack = Stack.new
+
+    game = ZombieGameApp.new(zombie_stack, humans_stack)
+
+    game.play_zombies_turn
+    assert_raises CardsNotTakenToHand do
+      game.zombies_remove_card_to_trash(griszka)
     end
   end
 
