@@ -295,8 +295,8 @@ class FullGame < Test::Unit::TestCase
     game.zombies_take_cards_to_hand
     game.zombies_remove_card_to_trash(griszka_2)
 
-    game.zombies_play_card(wladek_1, 0, 5)
-    game.zombies_play_card(wladek_2, 2, 5)
+    game.zombies_play_card_on_place(wladek_1, 0, 5)
+    game.zombies_play_card_on_place(wladek_2, 2, 5)
     game.zombies_finish_move
 
     game.humans_take_cards_to_hand
@@ -379,6 +379,25 @@ class FullGame < Test::Unit::TestCase
     game.play_zombies_turn
     assert_raises ZombieLost do
       game.zombies_take_cards_to_hand
+    end
+  end
+
+  def test_zombies_only_start_at_5th_row
+    zombie_stack = Stack.new
+    wladek = ThingAppearsOnPlace.new(Zombie.new(4, "wladek"))
+    zombie_stack << wladek
+    zombie_stack << ThingAppearsOnPlace.new(Zombie.new(4, "wladek"))
+    zombie_stack << ThingAppearsOnPlace.new(Zombie.new(2, "griszka"))
+    zombie_stack << ThingAppearsOnPlace.new(Zombie.new(2, "griszka"))
+    zombie_stack << Dawn.new
+
+    humans_stack = Stack.new
+
+    game = ZombieGameApp.new(zombie_stack, humans_stack)
+
+    game.play_zombies_turn
+    assert_raises InvalidMove do
+      game.zombies_play_card_on_place(wladek, 0, 4)
     end
   end
 

@@ -23,9 +23,11 @@ class ZombieGameApp
     @zombie_trash << card
   end
 
-  def zombies_play_card(card, street_index, block)
+  def zombies_play_card_on_place(card, street_index, block)
+    raise InvalidMove.new if card.class == ThingAppearsOnPlace && block != 5
     apply_effect_on_place(street_index, block, card)
   end
+
 
   def zombies_finish_move
 
@@ -92,4 +94,7 @@ end
 
 class ZombieLost < StandardError
 
+end
+
+class InvalidMove < StandardError
 end
