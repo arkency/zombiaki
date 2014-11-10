@@ -267,7 +267,7 @@ class StreetOnFire < Test::Unit::TestCase
 end
 
 class FullGame < Test::Unit::TestCase
-  def test_full_game
+  def test_zombie_win_by_getting_to_barricade
     zombie_stack = Stack.new
     wladek_1 = ThingAppearsOnPlace.new(Zombie.new(4, "wladek"))
     wladek_2 = ThingAppearsOnPlace.new(Zombie.new(4, "wladek"))
@@ -352,4 +352,26 @@ class FullGame < Test::Unit::TestCase
 
     game.play_zombies_turn
   end
+
+  def test_humans_win_because_dawn
+    zombie_stack = Stack.new
+    wladek_1 = ThingAppearsOnPlace.new(Zombie.new(4, "wladek"))
+    wladek_2 = ThingAppearsOnPlace.new(Zombie.new(4, "wladek"))
+    griszka_1 = ThingAppearsOnPlace.new(Zombie.new(2, "griszka"))
+    dawn = Dawn.new
+    zombie_stack << wladek_1
+    zombie_stack << wladek_2
+    zombie_stack << griszka_1
+    zombie_stack << dawn
+
+    humans_stack = Stack.new
+
+    game = ZombieGameApp.new(zombie_stack, humans_stack)
+
+    game.play_zombies_turn
+    assert_raises ZombieLost do
+      game.zombies_take_cards_to_hand
+    end
+  end
+
 end

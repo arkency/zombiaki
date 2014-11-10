@@ -14,7 +14,9 @@ class ZombieGameApp
   end
 
   def zombies_take_cards_to_hand
-    @zombie_hand << @board.zombies_stack.slice!(0, 4 - @zombie_hand.count)
+    new_hand_cards = @board.zombies_stack.slice!(0, 4 - @zombie_hand.count)
+    raise ZombieLost.new if new_hand_cards.detect{|card| card.class == Dawn}
+    @zombie_hand << new_hand_cards
   end
 
   def zombies_remove_card_to_trash(card)
@@ -38,7 +40,6 @@ class ZombieGameApp
   end
 
   def humans_play_card(street_index, block, card)
-
   end
 
   def humans_finish_move
@@ -88,3 +89,7 @@ class Hand
   end
 end
 
+
+class ZombieLost < StandardError
+
+end

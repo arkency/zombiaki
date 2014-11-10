@@ -31,3 +31,7 @@ class ThingAppearsOnPlace
     place.put(@thing)
   end
 end
+
+class Dawn
+
+end
