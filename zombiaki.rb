@@ -11,6 +11,9 @@ class ZombieGameApp
 
     @zombie_hand = Hand.new
     @zombie_trash = Stack.new
+
+    @human_hand = Hand.new
+    @human_trash = Stack.new
   end
 
   def zombies_take_cards_to_hand
@@ -37,14 +40,17 @@ class ZombieGameApp
   end
 
   def humans_take_cards_to_hand
-
+    new_hand_cards = @board.humans_stack.slice!(0, 4 - @human_hand.count) || []
+    new_hand_cards.each {|card| @human_hand << card}
   end
 
   def humans_remove_card_to_trash(card)
-
+    @human_hand.remove(card)
+    @human_trash << card
   end
 
   def humans_play_card(street_index, block, card)
+    raise CardNotRemoved if @human_hand.count == 4
   end
 
   def humans_finish_move

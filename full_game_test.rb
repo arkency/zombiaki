@@ -26,11 +26,19 @@ class FullGame < Test::Unit::TestCase
     shoot_2 = ShootEffect.new
     shoot_3 = ShootEffect.new
     shoot_4 = ShootEffect.new
+    shoot_5 = ShootEffect.new
+    shoot_6 = ShootEffect.new
+    shoot_7 = ShootEffect.new
+    shoot_8 = ShootEffect.new
 
     humans_stack << shoot_1
     humans_stack << shoot_2
     humans_stack << shoot_3
     humans_stack << shoot_4
+    humans_stack << shoot_5
+    humans_stack << shoot_6
+    humans_stack << shoot_7
+    humans_stack << shoot_8
 
     game = ZombieGameApp.new(zombie_stack, humans_stack)
 
@@ -213,6 +221,37 @@ class FullGame < Test::Unit::TestCase
     assert_raises CardsNotTakenToHand do
       game.zombies_remove_card_to_trash(griszka)
     end
+  end
+
+  def test_humans_need_to_remove_card_before_playing
+    humans_stack = Stack.new
+    zombie_stack = Stack.new
+    griszka = ThingAppearsOnPlace.new(Zombie.new(2, "griszka"))
+    zombie_stack << griszka
+    zombie_stack << ThingAppearsOnPlace.new(Zombie.new(2, "griszka"))
+    zombie_stack << ThingAppearsOnPlace.new(Zombie.new(2, "griszka"))
+    zombie_stack << ThingAppearsOnPlace.new(Zombie.new(2, "griszka"))
+    zombie_stack << Dawn.new
+
+    shoot = ShootEffect.new
+    humans_stack << shoot
+    humans_stack << ShootEffect.new
+    humans_stack << ShootEffect.new
+    humans_stack << ShootEffect.new
+    humans_stack << ShootEffect.new
+
+    game = ZombieGameApp.new(zombie_stack, humans_stack)
+    game.play_zombies_turn
+    game.zombies_take_cards_to_hand
+    game.zombies_remove_card_to_trash(griszka)
+    game.zombies_finish_move
+
+    game.play_humans_turn
+    game.humans_take_cards_to_hand
+    assert_raises CardNotRemoved do
+      game.humans_play_card(5, 1, shoot)
+    end
+
   end
 
 end
