@@ -91,7 +91,6 @@ class Hand
   end
 
   def remove(card)
-    raise CardNotInHand.new(@cards) if ! @cards.include?(card)
     @cards.delete(card)
   end
 end
