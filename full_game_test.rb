@@ -65,6 +65,7 @@ class FullGame < Test::Unit::TestCase
 
     game.play_humans_turn
     game.humans_take_cards_to_hand
+    game.humans_remove_card_to_trash(shoot_3)
     game.humans_finish_move
 
 
@@ -77,6 +78,7 @@ class FullGame < Test::Unit::TestCase
 
     game.play_humans_turn
     game.humans_take_cards_to_hand
+    game.humans_remove_card_to_trash(shoot_4)
     game.humans_finish_move
 
 
@@ -89,6 +91,7 @@ class FullGame < Test::Unit::TestCase
 
     game.play_humans_turn
     game.humans_take_cards_to_hand
+    game.humans_remove_card_to_trash(shoot_5)
     game.humans_finish_move
 
 
@@ -101,6 +104,7 @@ class FullGame < Test::Unit::TestCase
 
     game.play_humans_turn
     game.humans_take_cards_to_hand
+    game.humans_remove_card_to_trash(shoot_6)
     game.humans_finish_move
 
 
@@ -252,6 +256,36 @@ class FullGame < Test::Unit::TestCase
       game.humans_play_card(5, 1, shoot)
     end
 
+  end
+
+  def test_humans_cant_finish_move_if_card_not_removed
+    humans_stack = Stack.new
+    zombie_stack = Stack.new
+    griszka = ThingAppearsOnPlace.new(Zombie.new(2, "griszka"))
+    zombie_stack << griszka
+    zombie_stack << ThingAppearsOnPlace.new(Zombie.new(2, "griszka"))
+    zombie_stack << ThingAppearsOnPlace.new(Zombie.new(2, "griszka"))
+    zombie_stack << ThingAppearsOnPlace.new(Zombie.new(2, "griszka"))
+    zombie_stack << Dawn.new
+
+    shoot = ShootEffect.new
+    humans_stack << shoot
+    humans_stack << ShootEffect.new
+    humans_stack << ShootEffect.new
+    humans_stack << ShootEffect.new
+    humans_stack << ShootEffect.new
+
+    game = ZombieGameApp.new(zombie_stack, humans_stack)
+    game.play_zombies_turn
+    game.zombies_take_cards_to_hand
+    game.zombies_remove_card_to_trash(griszka)
+    game.zombies_finish_move
+
+    game.play_humans_turn
+    game.humans_take_cards_to_hand
+    assert_raises CardNotRemoved do
+      game.humans_finish_move
+    end
   end
 
 end

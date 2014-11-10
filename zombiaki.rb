@@ -54,7 +54,7 @@ class ZombieGameApp
   end
 
   def humans_finish_move
-
+    raise CardNotRemoved if @human_hand.count == 4
   end
 
   def won_by_zombies?
