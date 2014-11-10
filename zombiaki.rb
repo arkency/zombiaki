@@ -16,10 +16,11 @@ class ZombieGameApp
   def zombies_take_cards_to_hand
     new_hand_cards = @board.zombies_stack.slice!(0, 4 - @zombie_hand.count) || []
     raise ZombieLost.new if new_hand_cards.detect{|card| card.class == Dawn}
-    @zombie_hand << new_hand_cards
+    new_hand_cards.each {|card| @zombie_hand << card}
   end
 
   def zombies_remove_card_to_trash(card)
+    @zombie_hand.remove(card)
     @zombie_trash << card
   end
 
@@ -30,7 +31,6 @@ class ZombieGameApp
 
 
   def zombies_finish_move
-
   end
 
   def humans_take_cards_to_hand
@@ -89,6 +89,11 @@ class Hand
   def <<(card)
     @cards << card
   end
+
+  def remove(card)
+    raise CardNotInHand.new(@cards) if ! @cards.include?(card)
+    @cards.delete(card)
+  end
 end
 
 
@@ -97,4 +102,8 @@ class ZombieLost < StandardError
 end
 
 class InvalidMove < StandardError
+end
+
+class CardNotInHand < StandardError
+
 end
