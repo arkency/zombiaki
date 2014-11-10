@@ -14,7 +14,7 @@ class ZombieGameApp
   end
 
   def zombies_take_cards_to_hand
-    new_hand_cards = @board.zombies_stack.slice!(0, 4 - @zombie_hand.count)
+    new_hand_cards = @board.zombies_stack.slice!(0, 4 - @zombie_hand.count) || []
     raise ZombieLost.new if new_hand_cards.detect{|card| card.class == Dawn}
     @zombie_hand << new_hand_cards
   end

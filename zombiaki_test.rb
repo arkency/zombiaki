@@ -295,8 +295,8 @@ class FullGame < Test::Unit::TestCase
     game.zombies_take_cards_to_hand
     game.zombies_remove_card_to_trash(griszka_2)
 
-    game.zombies_play_card(wladek_1, 0, 4)
-    game.zombies_play_card(wladek_2, 2, 4)
+    game.zombies_play_card(wladek_1, 0, 5)
+    game.zombies_play_card(wladek_2, 2, 5)
     game.zombies_finish_move
 
     game.humans_take_cards_to_hand
@@ -308,6 +308,17 @@ class FullGame < Test::Unit::TestCase
     game.play_zombies_turn
     assert_equal(false, game.won_by_zombies?)
 
+    #zombies now at 4
+    game.zombies_take_cards_to_hand
+    game.zombies_finish_move
+
+    game.play_humans_turn
+    game.humans_take_cards_to_hand
+    game.humans_finish_move
+
+
+    game.play_zombies_turn
+    assert_equal(false, game.won_by_zombies?)
     #zombies now at 3
     game.zombies_take_cards_to_hand
     game.zombies_finish_move
@@ -348,9 +359,6 @@ class FullGame < Test::Unit::TestCase
     game.play_humans_turn
     game.humans_take_cards_to_hand
     game.humans_finish_move
-
-
-    game.play_zombies_turn
   end
 
   def test_humans_win_because_dawn
