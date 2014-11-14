@@ -45,5 +45,7 @@ class ThingAppearsOnPlace
 end
 
 class Dawn
-
+  def name
+    "dawn"
+  end
 end

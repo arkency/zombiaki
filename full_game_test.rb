@@ -84,8 +84,8 @@ class FullGameToTheEnd < Test::Unit::TestCase
 
   def test_humans_win_because_dawn
     zombie_stack = Stack.new
-    wladek_1 = ThingAppearsOnPlace.new(Zombie.new(4, "wladek"))
-    wladek_2 = ThingAppearsOnPlace.new(Zombie.new(4, "wladek"))
+    wladek_1 = ThingAppearsOnPlace.new(Zombie.new(4, "wladek_1"))
+    wladek_2 = ThingAppearsOnPlace.new(Zombie.new(4, "wladek_2"))
     griszka_1 = ThingAppearsOnPlace.new(Zombie.new(2, "griszka"))
     dawn = Dawn.new
     zombie_stack << wladek_1
