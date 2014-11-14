@@ -10,6 +10,16 @@ class ZombieCardDealer
     zombie_stack
   end
 
+  def basic_humans
+    humans_stack = Stack.new
+    humans_stack << ShootEffect.new("shoot_1")
+    humans_stack << ShootEffect.new("shoot_2")
+    humans_stack << ShootEffect.new("shoot_3")
+    humans_stack << ShootEffect.new("shoot_4")
+    humans_stack << ShootEffect.new("shoot_5")
+    humans_stack
+  end
+
   def zombie_stack
     zombie_stack = Stack.new
     wladek_1 = ThingAppearsOnPlace.new(Zombie.new(4, "wladek_1"))

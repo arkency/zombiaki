@@ -35,14 +35,8 @@ class CorrectRules < Test::Unit::TestCase
   end
 
   def test_humans_need_to_remove_card_before_playing
-    humans_stack = Stack.new
-    humans_stack << ShootEffect.new("shoot_1")
-    humans_stack << ShootEffect.new("shoot_2")
-    humans_stack << ShootEffect.new("shoot_3")
-    humans_stack << ShootEffect.new("shoot_4")
-    humans_stack << ShootEffect.new("shoot_5")
-
-    game = ZombieGame.new(ZombieCardDealer.new.basic_zombies, humans_stack)
+    dealer = ZombieCardDealer.new
+    game = ZombieGame.new(dealer.basic_zombies, dealer.basic_humans)
     game.play_zombies_turn
     game.zombies_take_cards_to_hand
     game.zombies_remove_card_to_trash("griszka_1")
@@ -56,23 +50,8 @@ class CorrectRules < Test::Unit::TestCase
   end
 
   def test_humans_cant_finish_move_if_card_not_removed
-    humans_stack = Stack.new
-    zombie_stack = Stack.new
-    griszka = ThingAppearsOnPlace.new(Zombie.new(2, "griszka"))
-    zombie_stack << griszka
-    zombie_stack << ThingAppearsOnPlace.new(Zombie.new(2, "griszka_1"))
-    zombie_stack << ThingAppearsOnPlace.new(Zombie.new(2, "griszka_2"))
-    zombie_stack << ThingAppearsOnPlace.new(Zombie.new(2, "griszka_3"))
-    zombie_stack << Dawn.new
-
-    shoot = ShootEffect.new("shoot_1")
-    humans_stack << shoot
-    humans_stack << ShootEffect.new("shoot_2")
-    humans_stack << ShootEffect.new("shoot_3")
-    humans_stack << ShootEffect.new("shoot_4")
-    humans_stack << ShootEffect.new("shoot_5")
-
-    game = ZombieGame.new(zombie_stack, humans_stack)
+    dealer = ZombieCardDealer.new
+    game = ZombieGame.new(dealer.basic_zombies, dealer.basic_humans)
     game.play_zombies_turn
     game.zombies_take_cards_to_hand
     game.zombies_remove_card_to_trash("griszka_1")
