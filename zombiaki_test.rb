@@ -4,7 +4,7 @@ require './zombiaki'
 
 class ZombiesMoveForwardTestCase < Test::Unit::TestCase
   def test_zombies_turn_all_zombies_go
-    app = ZombieGameApp.new
+    app = ZombieGame.new
     app.apply_effect_on_place(0, 4, ThingAppearsOnPlace.new(Zombie.new(1, "griszka")))
     app.apply_effect_on_place(1, 4, ThingAppearsOnPlace.new(Zombie.new(1, "wladek")))
     app.apply_effect_on_place(2, 4, ThingAppearsOnPlace.new(Zombie.new(1, "misza" )))
@@ -96,14 +96,14 @@ end
 class ShootingAtStreetsTestCase < Test::Unit::TestCase
 
   def test_shoot_at_left_street_doesnt_kill_zombie_at_middle
-    app = ZombieGameApp.new
+    app = ZombieGame.new
     app.apply_effect_on_place(1, 4, ThingAppearsOnPlace.new(one_life_zombie("wladek")))
     app.apply_effect_on_street(0, ShootEffect.new)
     assert_equal("wladek", app.place(1, 4).name)
   end
 
   def test_shoot_at_middle_street_doesnt_kill_zombie_at_left
-    app = ZombieGameApp.new
+    app = ZombieGame.new
     app.apply_effect_on_place(0, 4, ThingAppearsOnPlace.new(one_life_zombie("wladek")))
     app.apply_effect_on_street(1, ShootEffect.new)
     assert_equal("wladek", app.place(0, 4).name)
@@ -111,7 +111,7 @@ class ShootingAtStreetsTestCase < Test::Unit::TestCase
 
 
   def test_shoot_targets_first_zombie_on_the_left_street
-    app = ZombieGameApp.new
+    app = ZombieGame.new
     app.apply_effect_on_place(0, 4, ThingAppearsOnPlace.new(one_life_zombie("griszka")))
     app.apply_effect_on_place(0, 3, ThingAppearsOnPlace.new(one_life_zombie))
     app.apply_effect_on_street(0, ShootEffect.new)
@@ -120,14 +120,14 @@ class ShootingAtStreetsTestCase < Test::Unit::TestCase
   end
 
   def test_shoot_at_middle_street_doesnt_kill_zombie_at_right
-    app = ZombieGameApp.new
+    app = ZombieGame.new
     app.apply_effect_on_place(2, 4, ThingAppearsOnPlace.new(one_life_zombie("wladek")))
     app.apply_effect_on_street(1, ShootEffect.new)
     assert_equal("wladek", app.place(2, 4).name)
   end
 
   def test_shoot_targets_first_zombie_on_the_right_street
-    app = ZombieGameApp.new
+    app = ZombieGame.new
     app.apply_effect_on_place(2, 4, ThingAppearsOnPlace.new(one_life_zombie("griszka")))
     app.apply_effect_on_place(2, 3, ThingAppearsOnPlace.new(one_life_zombie))
     app.apply_effect_on_street(2, ShootEffect.new)
@@ -203,7 +203,7 @@ end
 
 class SteroidsTestCase < Test::Unit::TestCase
   def test_have_no_effect_on_zombie_without_injuries
-    app = ZombieGameApp.new
+    app = ZombieGame.new
     wladek = Zombie.new(lives=2)
     app.apply_effect_on_place(1, 4, ThingAppearsOnPlace.new(wladek))
 
@@ -213,7 +213,7 @@ class SteroidsTestCase < Test::Unit::TestCase
   end
 
   def test_make_zombie_healthy
-    app = ZombieGameApp.new
+    app = ZombieGame.new
     wladek = Zombie.new(lives=2)
     app.apply_effect_on_place(1, 4, ThingAppearsOnPlace.new(wladek))
 
@@ -227,12 +227,12 @@ end
 
 class PickaxeTestCase < Test::Unit::TestCase
   def test_have_no_effect_on_empy_place
-    app = ZombieGameApp.new
+    app = ZombieGame.new
     app.apply_effect_on_place(0, 0, PickAxeEffect.new)
   end
 
   def test_remove_a_car
-    app = ZombieGameApp.new
+    app = ZombieGame.new
     trabant = Car.new("trabant")
     app.apply_effect_on_place(0, 0, ThingAppearsOnPlace.new(trabant))
     app.apply_effect_on_place(0, 0, PickAxeEffect.new)
@@ -243,7 +243,7 @@ end
 
 class StreetOnFire < Test::Unit::TestCase
   def test_no_effect_on_empty_street
-    app = ZombieGameApp.new
+    app = ZombieGame.new
     wladek = Zombie.new(lives=2)
     app.apply_effect_on_place(1, 4, ThingAppearsOnPlace.new(wladek))
 
@@ -253,7 +253,7 @@ class StreetOnFire < Test::Unit::TestCase
   end
 
   def test_adds_one_injury_to_all_zombies_on_the_street
-    app = ZombieGameApp.new
+    app = ZombieGame.new
     wladek = Zombie.new(lives=2)
     griszka = Zombie.new(lives=1)
     app.apply_effect_on_place(1, 4, ThingAppearsOnPlace.new(wladek))
