@@ -1,4 +1,4 @@
-require './place'
+require './lib/place'
 
 class Street
   def initialize

@@ -1,10 +1,10 @@
-require './zombie'
-require './car'
-require './street'
-require './effects'
-require './stack'
-require './board'
-require './zombie_card_dealer'
+require './lib/zombie'
+require './lib/car'
+require './lib/street'
+require './lib/effects'
+require './lib/stack'
+require './lib/board'
+require './lib/zombie_card_dealer'
 
 class ZombieGame
   def initialize(zombies_stack=Stack.new, humans_stack=Stack.new)

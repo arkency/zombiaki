@@ -1,5 +1,5 @@
 require 'test/unit'
-require './zombiaki'
+require './lib/zombiaki'
 
 
 class ZombiesMoveForwardTestCase < Test::Unit::TestCase
