@@ -6,7 +6,6 @@ class FullGameToTheEnd < Test::Unit::TestCase
 
     game.zombies_take_cards_to_hand
     game.zombies_remove_card_to_trash("griszka_1")
-
     game.zombies_play_card_on_place("wladek_1", 0, 5)
     game.zombies_play_card_on_place("wladek_2", 2, 5)
     game.zombies_finish_move
