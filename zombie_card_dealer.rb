@@ -1,5 +1,15 @@
 class ZombieCardDealer
 
+  def basic_zombies
+    zombie_stack = Stack.new
+    zombie_stack << ThingAppearsOnPlace.new(Zombie.new(4, "wladek_1"))
+    zombie_stack << ThingAppearsOnPlace.new(Zombie.new(4, "wladek_2"))
+    zombie_stack << ThingAppearsOnPlace.new(Zombie.new(2, "griszka_1"))
+    zombie_stack << ThingAppearsOnPlace.new(Zombie.new(2, "griszka_2"))
+    zombie_stack << Dawn.new
+    zombie_stack
+  end
+
   def zombie_stack
     zombie_stack = Stack.new
     wladek_1 = ThingAppearsOnPlace.new(Zombie.new(4, "wladek_1"))
