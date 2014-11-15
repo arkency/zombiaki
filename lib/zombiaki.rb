@@ -11,9 +11,9 @@ class ZombieGame
   def initialize(zombies_stack=Stack.new, humans_stack=Stack.new)
     @board = Board.new(zombies_stack, humans_stack)
 
-    @zombie_player = ZombiesPlayer.new
     @zombie_hand = Hand.new
     @zombie_trash = Stack.new
+    @zombie_player = ZombiesPlayer.new(zombies_stack, @zombie_hand)
 
     @humans_player = HumansPlayer.new
     @human_hand = Hand.new
@@ -21,9 +21,7 @@ class ZombieGame
   end
 
   def zombies_take_cards_to_hand
-    new_hand_cards = @board.zombies_stack.slice!(0, 4 - @zombie_hand.count) || []
-    raise ZombieLost.new if new_hand_cards.detect{|card| card.class == Dawn}
-    new_hand_cards.each {|card| @zombie_hand << card}
+    @zombie_player.take_cards_to_hand
   end
 
   def zombies_remove_card_to_trash(card_name)
@@ -99,7 +97,17 @@ class HumansPlayer
 end
 
 class ZombiesPlayer
+  def initialize(stack, hand)
+    @stack = stack
+    @hand = hand
+    @trash = Stack.new
+  end
 
+  def take_cards_to_hand
+    new_hand_cards = @stack.slice!(0, 4 - @hand.count) || []
+    raise ZombieLost.new if new_hand_cards.detect{|card| card.class == Dawn}
+    new_hand_cards.each {|card| @hand << card}
+  end
 end
 
 
