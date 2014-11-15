@@ -16,4 +16,8 @@ class Board
   def any_zombie_on_barricade?
     ! @streets.detect{|street| street.zombie_at_barricade?}.nil?
   end
+
+  def move_zombies_forward
+    @streets.each{|street| street.move_zombies_forward}
+  end
 end

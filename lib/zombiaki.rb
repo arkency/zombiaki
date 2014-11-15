@@ -54,7 +54,7 @@ class ZombieGame
   end
 
   def play_zombies_turn
-    @board.streets.each{|street| street.move_zombies_forward}
+    @board.move_zombies_forward
   end
 
   def play_humans_turn
