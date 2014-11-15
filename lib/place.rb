@@ -19,11 +19,6 @@ class Place
     @thing == nil
   end
 
-  def name
-    return "nil" if empty?
-    return @thing.name
-  end
-
   def has_car?
     thing.class == Car
   end
