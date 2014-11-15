@@ -12,10 +12,7 @@ class ZombieGame
     @board = Board.new(zombies_stack, humans_stack)
 
     @zombie_player = ZombiesPlayer.new(zombies_stack)
-
-    @human_hand = Hand.new
-    @human_trash = Stack.new
-    @humans_player = HumansPlayer.new(humans_stack, @human_hand)
+    @humans_player = HumansPlayer.new(humans_stack)
   end
 
   def zombies_take_cards_to_hand
@@ -41,17 +38,15 @@ class ZombieGame
   end
 
   def humans_remove_card_to_trash(card_name)
-    card = @human_hand.card_by_name(card_name)
-    @human_hand.remove(card)
-    @human_trash << card
+    @humans_player.remove_card_to_trash(card_name)
   end
 
   def humans_play_card(street_index, block, card)
-    raise CardNotRemoved if @human_hand.count == 4
+    raise CardNotRemoved if @humans_player.full_hand?
   end
 
   def humans_finish_move
-    raise CardNotRemoved if @human_hand.count == 4
+    raise CardNotRemoved if @humans_player.full_hand?
   end
 
   def won_by_zombies?
@@ -85,14 +80,25 @@ class ZombieGame
 end
 
 class HumansPlayer
-  def initialize(stack, hand)
+  def initialize(stack)
     @stack = stack
-    @hand  = hand
+    @hand  = Hand.new
+    @trash = Stack.new
   end
 
   def take_cards_to_hand
     new_hand_cards = @stack.slice!(0, 4 - @hand.count) || []
     new_hand_cards.each {|card| @hand << card}
+  end
+
+  def remove_card_to_trash(card_name)
+    card = @hand.card_by_name(card_name)
+    @hand.remove(card)
+    @trash << card
+  end
+
+  def full_hand?
+    @hand.count == 4
   end
 end
 
