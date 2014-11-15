@@ -61,17 +61,19 @@ class ZombieGame
     @board.move_cars_forward
   end
 
-  def apply_effect_on_zombie(effect, zombie)
-    effect.apply(zombie)
+  def apply_effect_on_place(street_index, block, effect)
+    effect.apply(place(street_index, block))
   end
 
   def apply_effect_on_street(street_index, effect)
     effect.apply(@board.street_for_index(street_index))
   end
 
-  def apply_effect_on_place(street_index, block, effect)
-    effect.apply(place(street_index, block))
+  def apply_effect_on_zombie(effect, zombie)
+    effect.apply(zombie)
   end
+
+  private
 
   def place(street_index, block)
     @board.place(street_index, block)
