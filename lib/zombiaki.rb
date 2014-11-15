@@ -11,9 +11,11 @@ class ZombieGame
   def initialize(zombies_stack=Stack.new, humans_stack=Stack.new)
     @board = Board.new(zombies_stack, humans_stack)
 
+    @zombie_player = ZombiesPlayer.new
     @zombie_hand = Hand.new
     @zombie_trash = Stack.new
 
+    @humans_player = HumansPlayer.new
     @human_hand = Hand.new
     @human_trash = Stack.new
   end
@@ -89,6 +91,14 @@ class ZombieGame
   def place(street_index, block)
     @board.place(street_index, block)
   end
+
+end
+
+class HumansPlayer
+
+end
+
+class ZombiesPlayer
 
 end
 
