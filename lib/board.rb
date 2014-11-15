@@ -20,4 +20,8 @@ class Board
   def move_zombies_forward
     @streets.each{|street| street.move_zombies_forward}
   end
+
+  def move_cars_forward
+    @streets.each{|street| street.move_humans_forward}
+  end
 end
