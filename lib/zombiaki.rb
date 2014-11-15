@@ -25,10 +25,7 @@ class ZombieGame
   end
 
   def zombies_remove_card_to_trash(card_name)
-    card = @zombie_hand.card_by_name(card_name)
-    raise CardsNotTakenToHand if @zombie_hand.count < 4
-    @zombie_hand.remove(card)
-    @zombie_trash << card
+    @zombie_player.remove_card_to_trash(card_name)
   end
 
   def zombies_play_card_on_place(card_name, street_index, block)
@@ -107,6 +104,13 @@ class ZombiesPlayer
     new_hand_cards = @stack.slice!(0, 4 - @hand.count) || []
     raise ZombieLost.new if new_hand_cards.detect{|card| card.class == Dawn}
     new_hand_cards.each {|card| @hand << card}
+  end
+
+  def remove_card_to_trash(card_name)
+    card = @hand.card_by_name(card_name)
+    raise CardsNotTakenToHand if @hand.count < 4
+    @hand.remove(card)
+    @trash << card
   end
 end
 
