@@ -5,6 +5,7 @@ require './lib/effects'
 require './lib/stack'
 require './lib/board'
 require './lib/zombie_card_dealer'
+require './lib/hand'
 
 class ZombieGame
   def initialize(zombies_stack=Stack.new, humans_stack=Stack.new)
@@ -91,32 +92,6 @@ class ZombieGame
 
 end
 
-class Hand
-  def initialize
-    @cards = []
-  end
-  def count
-    @cards.count
-  end
-
-  def <<(card)
-    @cards << card
-  end
-
-  def remove(card)
-    @cards.delete(card)
-  end
-
-  def include?(card)
-    @cards.include?(card)
-  end
-
-  def card_by_name(name)
-    card = @cards.detect {|card| card.name == name}
-    raise NoSuchCard.new if card.nil?
-    card
-  end
-end
 
 
 class ZombieLost < StandardError
