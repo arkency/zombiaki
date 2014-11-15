@@ -26,7 +26,6 @@ class ZombieGame
   def zombies_remove_card_to_trash(card_name)
     card = @zombie_hand.card_by_name(card_name)
     raise CardsNotTakenToHand if @zombie_hand.count < 4
-    raise NoSuchCard.new if ! @zombie_hand.include?(card)
     @zombie_hand.remove(card)
     @zombie_trash << card
   end

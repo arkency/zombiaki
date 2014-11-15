@@ -26,14 +26,6 @@ class CorrectRules < Test::Unit::TestCase
     end
   end
 
-  def test_zombies_need_to_take_cards_to_hand_before_removing
-    game = ZombieGame.new(ZombieCardDealer.new.basic_zombies, Stack.new)
-    game.play_zombies_turn
-    assert_raises NoSuchCard do
-      game.zombies_remove_card_to_trash("griszka_1")
-    end
-  end
-
   def test_humans_need_to_remove_card_before_playing
     dealer = ZombieCardDealer.new
     game = ZombieGame.new(dealer.basic_zombies, dealer.basic_humans)
@@ -63,4 +55,5 @@ class CorrectRules < Test::Unit::TestCase
       game.humans_finish_move
     end
   end
+
 end
