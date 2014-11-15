@@ -9,7 +9,7 @@ require './lib/hand'
 
 class ZombieGame
   def initialize(zombies_stack=Stack.new, humans_stack=Stack.new)
-    @board = Board.new(zombies_stack, humans_stack)
+    @board = Board.new
 
     @zombie_player = ZombiesPlayer.new(zombies_stack)
     @humans_player = HumansPlayer.new(humans_stack)
