@@ -11,9 +11,7 @@ class ZombieGame
   def initialize(zombies_stack=Stack.new, humans_stack=Stack.new)
     @board = Board.new(zombies_stack, humans_stack)
 
-    @zombie_hand = Hand.new
-    @zombie_trash = Stack.new
-    @zombie_player = ZombiesPlayer.new(zombies_stack, @zombie_hand)
+    @zombie_player = ZombiesPlayer.new(zombies_stack)
 
     @humans_player = HumansPlayer.new
     @human_hand = Hand.new
@@ -92,9 +90,9 @@ class HumansPlayer
 end
 
 class ZombiesPlayer
-  def initialize(stack, hand)
+  def initialize(stack)
     @stack = stack
-    @hand = hand
+    @hand =  Hand.new
     @trash = Stack.new
   end
 
