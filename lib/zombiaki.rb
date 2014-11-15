@@ -29,9 +29,7 @@ class ZombieGame
   end
 
   def zombies_play_card_on_place(card_name, street_index, block)
-    card = @zombie_hand.card_by_name(card_name)
-    raise CardsNotTakenToHand if @zombie_hand.count < 3
-    raise CardNotRemoved if @zombie_hand.count == 4
+    card = @zombie_player.choose_card(card_name)
     raise InvalidMove.new if card.class == ThingAppearsOnPlace && block != 5
     apply_effect_on_place(street_index, block, card)
   end
@@ -111,6 +109,13 @@ class ZombiesPlayer
     raise CardsNotTakenToHand if @hand.count < 4
     @hand.remove(card)
     @trash << card
+  end
+
+  def choose_card(card_name)
+    card = @hand.card_by_name(card_name)
+    raise CardsNotTakenToHand if @hand.count < 3
+    raise CardNotRemoved if @hand.count == 4
+    return card
   end
 end
 
